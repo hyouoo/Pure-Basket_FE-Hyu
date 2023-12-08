@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from '../pages/Home';
-import Layout from '../layout/Layout';
+import LayoutComponent from '../layout/LayoutComponent';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout/>}>
+        <Route element={<LayoutComponent/>}>
           <Route path="/" element={<Home />} />
           {/* <Route path="about" element={<About />} /> */}
           {/* <Route path="contact" element={<Contact />} /> */}
