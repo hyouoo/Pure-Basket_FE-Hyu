@@ -1,23 +1,46 @@
 import { Link, Outlet } from 'react-router-dom';
-import React from 'react';
+import React, { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { userState } from '../recoil/atoms';
 import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
   SmileOutlined,
 } from '@ant-design/icons';
-import { Layout, Anchor, theme, Button, Flex, Divider } from 'antd';
+import { Layout, Anchor, theme, Button, Flex, Divider, Typography } from 'antd';
 import Search from 'antd/es/input/Search';
+import { defaultInstance } from '../network/axios';
 const { Header, Content, Footer, Sider } = Layout;
+const { Title } = Typography;
 
 const LayoutComponent = () => {
   const {
     token: { colorBgContainer, colorPrimary, colorTertiary },
   } = theme.useToken();
+  const [user, setUser] = useRecoilState(userState);
+  const [inputValue, setInputValue] = useState('');
 
-  const onSearch = (value, _e, info) => {
-    console.log(info?.source, value);
+  const handleClick = () => {
+    setUser(() => ({
+      token: '',
+      email: '',
+      role: '',
+    }));
   };
+
+  // ToDo: 검색 결과 페이지 만들기
+  const onSearch = async () => {
+    const data = await defaultInstance.get(
+      `/products/search?query=${inputValue}`
+    );
+    setInputValue('');
+  };
+
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
   return (
     <Layout>
       <Header
@@ -34,19 +57,30 @@ const LayoutComponent = () => {
         </Link>
         <Search
           placeholder="input search text"
+          onChange={handleChange}
           onSearch={onSearch}
           enterButton
           style={{
             width: '400px',
           }}
+          value={inputValue}
         />
         <Flex gap="small" wrap="wrap">
-          <Link to="login">
-            <Button type="primary">로그인</Button>
-          </Link>
-          <Link to="signup">
-            <Button>회원가입</Button>
-          </Link>
+          {user.email ? (
+            <>
+              <Title level={4}>{user.email}</Title>
+              <Button onClick={handleClick}>로그아웃</Button>
+            </>
+          ) : (
+            <>
+              <Link to="login">
+                <Button type="primary">로그인</Button>
+              </Link>
+              <Link to="signup">
+                <Button>회원가입</Button>
+              </Link>
+            </>
+          )}
         </Flex>
       </Header>
       <Layout>

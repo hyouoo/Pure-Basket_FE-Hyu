@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Alert } from 'antd';
+import { defaultInstance } from '../network/axios';
 
 const MyFormItemContext = React.createContext([]);
 function toArr(str) {
@@ -20,8 +20,8 @@ const Signup = () => {
   const [text, setText] = useState('');
 
   const handleSubmit = async (data) => {
-    axios
-      .post(`http://localhost:8080/api/auth/signup`, { ...data })
+    defaultInstance
+      .post(`/auth/signup`, { ...data })
       .then(() => navigate('/login'))
       .catch((error) => {
         setText(error.toString());

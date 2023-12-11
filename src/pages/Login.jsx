@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Alert } from 'antd';
-import styled from 'styled-components';
-
-const Wrapper = styled.div`
-  margin: 8px 16px;
-  padding: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import base64 from 'base-64';
+import { useSetRecoilState } from 'recoil';
+import { userState } from '../recoil/atoms';
+import { defaultInstance } from '../network/axios';
 
 const MyFormItemContext = React.createContext([]);
 function toArr(str) {
@@ -27,11 +21,26 @@ const Login = () => {
   const navigate = useNavigate();
   const [isAlert, setIsAlert] = useState(false);
   const [text, setText] = useState('');
+  const setUserState = useSetRecoilState(userState);
 
   const handleSubmit = async (data) => {
-    axios
-      .post(`http://localhost:8080/api/auth/login`, { ...data })
-      .then(() => navigate('/'))
+    defaultInstance
+      .post(`/auth/login`, { ...data })
+      .then((res) => {
+        const token = res.headers.authorization;
+        const payload = token.substring(
+          token.indexOf('.') + 1,
+          token.lastIndexOf('.')
+        );
+        const decoded = JSON.parse(base64.decode(payload));
+        const state = {
+          token,
+          email: decoded.sub,
+          role: decoded.auth,
+        };
+        setUserState(() => ({ ...state }));
+        navigate('/');
+      })
       .catch((error) => {
         // setText(error.toString());
         setText('이메일 또는 비밀번호가 일치하지 않습니다');

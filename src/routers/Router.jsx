@@ -9,6 +9,7 @@ import Carts from '../pages/Carts';
 import NotFound from '../pages/NotFound';
 import Recipes from '../pages/Recipes';
 import ProductDetail from '../pages/ProductDetail';
+import RecipeDetail from '../pages/RecipeDetail';
 
 const Router = () => {
   return (
@@ -23,7 +24,7 @@ const Router = () => {
           <Route path="/products/:productId" element={<ProductDetail />} />
           <Route path="/carts" element={<Carts />} />
           <Route path="/recipes" element={<Recipes />} />
-          <Route path="/recipes/:recipeId" element={<Recipes />} />
+          <Route path="/recipes/:recipeId" element={<RecipeDetail />} />
 
           {/* <Route path="about" element={<About />} /> */}
           {/* <Route path="contact" element={<Contact />} /> */}
