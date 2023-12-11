@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Flex, Image, Divider, Button, List } from 'antd';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { defaultInstance } from '../network/axios';
+import { createJwtInstance, defaultInstance } from '../network/axios';
+import { userState } from '../recoil/atoms';
+import { useRecoilValue } from 'recoil';
 
 const { Title, Paragraph } = Typography;
 
 const RecipeDetail = () => {
+  const navigate = useNavigate();
   const { recipeId } = useParams();
   const [recipe, setRecipe] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const { token } = useRecoilValue(userState);
+
   const fetchData = async (page = 1) => {
     const { data } = await defaultInstance.get(`/recipes/${recipeId}`);
     // console.log(data);
@@ -17,8 +22,9 @@ const RecipeDetail = () => {
     setIsLoading(false);
   };
 
-  const handleClick = () => {
-    axios.post(`http://localhost:8080/api/carts/recipes/${recipeId}`);
+  const handleClick = async () => {
+    await createJwtInstance(token).post(`/carts/recipes/${recipeId}`);
+    navigate('/purchase_list');
   };
 
   useEffect(() => {

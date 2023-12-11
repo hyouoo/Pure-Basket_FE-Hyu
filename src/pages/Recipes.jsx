@@ -14,7 +14,6 @@ const Recipes = () => {
     } = await defaultInstance.get(`/recipes`);
 
     setRecipes(content);
-    console.log(recipes);
     setIsLoading(false);
   };
 
