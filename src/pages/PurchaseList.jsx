@@ -1,7 +1,90 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Button, Flex, List, Skeleton, Typography } from 'antd';
+import { createJwtInstance } from '../network/axios';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../recoil/atoms';
+
+const { Title } = Typography;
 
 const PurchaseList = () => {
-  return <div>PurchaseList</div>;
+  const [initLoading, setInitLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const { token } = useRecoilValue(userState);
+
+  const fetchData = async () => {
+    const {
+      data: { content },
+    } = await createJwtInstance(token).get(`/purchases?page=${page}`);
+
+    setInitLoading(false);
+    setData((prev) => [...prev, ...content]);
+    setLoading(false);
+    //     // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
+    //     // In real scene, you can using public method of react-virtualized:
+    //     // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
+    window.dispatchEvent(new Event('resize'));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const onLoadMore = () => {
+    setLoading(true);
+    setPage((prev) => prev + 1);
+    fetchData();
+  };
+  const loadMore =
+    !initLoading && !loading ? (
+      <div
+        style={{
+          textAlign: 'center',
+          marginTop: 12,
+          height: 32,
+          lineHeight: '32px',
+        }}
+      >
+        <Button onClick={onLoadMore}>loading more</Button>
+      </div>
+    ) : null;
+  return (
+    <List
+      style={{ width: '80%' }}
+      className="demo-loadmore-list"
+      loading={initLoading}
+      itemLayout="horizontal"
+      loadMore={loadMore}
+      dataSource={data}
+      renderItem={(item) => (
+        <List.Item
+        // actions={[
+        //   <a key="list-loadmore-edit">edit</a>,
+        //   <a key="list-loadmore-more">more</a>,
+        // ]}
+        >
+          <Skeleton title={false} loading={item.loading} active>
+            <List.Item.Meta
+              title={
+                <a href={`/products/${item.productId}`}>
+                  <Title level={5}>{item.name}</Title>
+                </a>
+              }
+              description={new Date(item.purchasedAt).toLocaleString()}
+            />
+            <Flex gap={32}>
+              <div>수량: {item.amount}개</div>
+              <div>가격: {item.price.toLocaleString()}원</div>
+              <Title level={5}>
+                총 가격: {item.totalPrice.toLocaleString()}원
+              </Title>
+            </Flex>
+          </Skeleton>
+        </List.Item>
+      )}
+    />
+  );
 };
 
 export default PurchaseList;
