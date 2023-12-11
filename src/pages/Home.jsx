@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { defaultInstance } from '../network/axios';
 import {
   Pagination,
   Row,
@@ -8,9 +9,7 @@ import {
   Divider,
   Typography,
 } from 'antd';
-import axios from 'axios';
 import Product from '../components/Product';
-import { defaultInstance } from '../network/axios';
 
 const { Title } = Typography;
 

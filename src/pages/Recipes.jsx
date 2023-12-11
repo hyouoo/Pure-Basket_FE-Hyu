@@ -1,8 +1,7 @@
-import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import { Divider, List } from 'antd';
 import { Link } from 'react-router-dom';
 import { defaultInstance } from '../network/axios';
+import { Divider, List } from 'antd';
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);

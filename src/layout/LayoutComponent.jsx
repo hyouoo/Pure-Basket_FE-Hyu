@@ -1,20 +1,16 @@
-import { Link, Outlet } from 'react-router-dom';
 import React, { useState } from 'react';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { defaultInstance } from '../network/axios';
 import { useRecoilState } from 'recoil';
 import { userState } from '../recoil/atoms';
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  SmileOutlined,
-} from '@ant-design/icons';
-import { Layout, Anchor, theme, Button, Flex, Divider, Typography } from 'antd';
+
+import { Layout, Anchor, theme, Button, Flex, Typography } from 'antd';
 import Search from 'antd/es/input/Search';
-import { defaultInstance } from '../network/axios';
 const { Header, Content, Footer, Sider } = Layout;
 const { Title } = Typography;
 
 const LayoutComponent = () => {
+  const navigate = useNavigate();
   const {
     token: { colorBgContainer, colorPrimary, colorSecondary, colorTertiary },
   } = theme.useToken();
@@ -27,6 +23,7 @@ const LayoutComponent = () => {
       email: '',
       role: '',
     }));
+    navigate('/');
   };
 
   // ToDo: 검색 결과 페이지 만들기
@@ -93,6 +90,7 @@ const LayoutComponent = () => {
           style={{
             margin: '8px',
             backgroundColor: colorTertiary,
+            borderRight: '1px solid rgba(0, 0, 0, 0.08)',
           }}
           breakpoint="lg"
           collapsedWidth="0"
@@ -137,7 +135,6 @@ const LayoutComponent = () => {
               // },
             ]}
           />
-          <Divider />
         </Sider>
         <Layout>
           <Content

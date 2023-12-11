@@ -1,7 +1,7 @@
 import React from 'react';
-import { Image } from 'antd';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Image } from 'antd';
 
 const Wrapper = styled.div`
   margin: 8px 16px;

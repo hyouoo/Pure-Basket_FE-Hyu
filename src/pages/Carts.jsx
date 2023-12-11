@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Table } from 'antd';
+
 const columns = [
   {
     title: '상품명',
@@ -14,7 +15,9 @@ const columns = [
     dataIndex: 'price',
   },
 ];
+
 const data = [];
+
 for (let i = 0; i < 21; i++) {
   data.push({
     key: i,
@@ -23,6 +26,7 @@ for (let i = 0; i < 21; i++) {
     price: `Price ${i * 1000} `,
   });
 }
+
 const Carts = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);

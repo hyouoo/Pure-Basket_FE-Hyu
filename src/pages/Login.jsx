@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Input, Button, Alert } from 'antd';
-import base64 from 'base-64';
+import { defaultInstance } from '../network/axios';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '../recoil/atoms';
-import { defaultInstance } from '../network/axios';
+import { Form, Input, Button, Alert } from 'antd';
+import base64 from 'base-64';
 
 const MyFormItemContext = React.createContext([]);
 function toArr(str) {

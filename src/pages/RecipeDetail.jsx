@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Flex, Image, Divider, Button, List } from 'antd';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import { createJwtInstance, defaultInstance } from '../network/axios';
-import { userState } from '../recoil/atoms';
 import { useRecoilValue } from 'recoil';
+import { userState } from '../recoil/atoms';
+import { Typography, Flex, Image, Divider, Button, List } from 'antd';
 
 const { Title, Paragraph } = Typography;
 
