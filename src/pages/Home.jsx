@@ -1,52 +1,76 @@
 import React, { useState } from 'react';
-import { Pagination, Image, Carousel } from 'antd';
+import { Pagination, Image, Carousel, theme } from 'antd';
+import { Header } from 'antd/es/layout/layout';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   // const [current, setCurrent] = useState(26);
   // const onChange = (page) => {
   //   setCurrent(page);
   // };
+  const {
+    token: { colorBgContainer, colorPrimary, colorTertiary },
+  } = theme.useToken();
   return (
     <>
+      <Header
+        style={{
+          padding: 0,
+          background: colorBgContainer,
+        }}
+      >
+        할인 중인 상품
+      </Header>
       <Carousel autoplay>
         <div>
+          <Link to="/products/1">
+            <Image
+              preview={false}
+              width={200}
+              src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
+            />
+          </Link>
           <Image
+            preview={false}
             width={200}
             src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
           />
           <Image
-            width={200}
-            src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
-          />
-          <Image
-            width={200}
-            src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
-          />
-        </div>
-        <div>
-          <Image
-            width={200}
-            src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
-          />
-          <Image
-            width={200}
-            src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
-          />
-          <Image
+            preview={false}
             width={200}
             src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
           />
         </div>
         <div>
           <Image
+            preview={false}
             width={200}
             src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
           />
           <Image
+            preview={false}
             width={200}
             src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
           />
           <Image
+            preview={false}
+            width={200}
+            src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
+          />
+        </div>
+        <div>
+          <Image
+            preview={false}
+            width={200}
+            src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
+          />
+          <Image
+            preview={false}
+            width={200}
+            src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
+          />
+          <Image
+            preview={false}
             width={200}
             height={200}
             src="error"
@@ -55,39 +79,52 @@ const Home = () => {
         </div>
       </Carousel>
 
+      <Link to="/products/1">
+        <Image
+          preview={false}
+          width={200}
+          src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
+        />
+      </Link>
+      <Link to="/products/2">
+        <Image
+          preview={false}
+          width={200}
+          src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
+        />
+      </Link>
       <Image
+        preview={false}
         width={200}
         src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
       />
       <Image
+        preview={false}
         width={200}
         src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
       />
       <Image
+        preview={false}
         width={200}
         src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
       />
       <Image
+        preview={false}
         width={200}
         src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
       />
       <Image
+        preview={false}
         width={200}
         src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
       />
       <Image
+        preview={false}
         width={200}
         src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
       />
       <Image
-        width={200}
-        src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
-      />
-      <Image
-        width={200}
-        src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
-      />
-      <Image
+        preview={false}
         width={200}
         src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
       />

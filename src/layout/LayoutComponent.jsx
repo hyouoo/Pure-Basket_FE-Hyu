@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import React from 'react';
 import {
   UploadOutlined,
@@ -6,13 +6,18 @@ import {
   VideoCameraOutlined,
   SmileOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, theme, Button, Flex, Divider } from 'antd';
+import { Layout, Anchor, theme, Button, Flex, Divider } from 'antd';
+import Search from 'antd/es/input/Search';
 const { Header, Content, Footer, Sider } = Layout;
 
 const LayoutComponent = () => {
   const {
     token: { colorBgContainer, colorPrimary, colorTertiary },
   } = theme.useToken();
+
+  const onSearch = (value, _e, info) => {
+    console.log(info?.source, value);
+  };
   return (
     <Layout>
       <Header
@@ -20,18 +25,34 @@ const LayoutComponent = () => {
           backgroundColor: colorPrimary,
           display: 'flex',
           alignItems: 'center',
+          justifyContent: 'space-between',
         }}
       >
-        Pure Basket
+        <Link to="/">
+          <img src="" alt="" />
+          Pure Basket
+        </Link>
+        <Search
+          placeholder="input search text"
+          onSearch={onSearch}
+          enterButton
+          style={{
+            width: '400px',
+          }}
+        />
         <Flex gap="small" wrap="wrap">
-          <Button type="primary">로그인</Button>
-          <Button>회원가입</Button>
+          <Link to="login">
+            <Button type="primary">로그인</Button>
+          </Link>
+          <Link to="signup">
+            <Button>회원가입</Button>
+          </Link>
         </Flex>
       </Header>
       <Layout>
         <Sider
-          // type="primary"
           style={{
+            margin: '8px',
             backgroundColor: colorTertiary,
           }}
           breakpoint="lg"
@@ -43,44 +64,38 @@ const LayoutComponent = () => {
             // console.log(collapsed, type);
           }}
         >
-          <div className="demo-logo-vertical" />
-          <Menu
+          <div />
+          <Anchor
             style={{
+              marginTop: '8px',
               backgroundColor: colorTertiary,
             }}
-            // theme="dark"
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            // items={[
-            //   UserOutlined,
-            //   VideoCameraOutlined,
-            //   UploadOutlined,
-            //   UserOutlined,
-            // ].map((icon, index) => ({
-            //   key: String(index + 1),
-            //   icon: React.createElement(icon),
-            //   label: `nav ${index + 1}`,
-            // }))}
-
-            items={['상품 조회', '장바구니?', '추천 레시피'].map(
-              (menu, index) => ({
-                key: String(index + 1),
-                icon: React.createElement(SmileOutlined),
-                label: `${menu}`,
-              })
-            )}
+            items={[
+              {
+                key: 'part-1',
+                href: '/',
+                title: `상품 조회`,
+              },
+              {
+                key: 'part-2',
+                href: '/carts',
+                title: '장바구니',
+              },
+              {
+                key: 'part-3',
+                href: '/recipes',
+                title: '추천 레시피',
+              },
+              // {
+              //   key: 'part-1',
+              //   href: '#part-1',
+              //   title: `상품 조회`,
+              // },
+            ]}
           />
           <Divider />
         </Sider>
         <Layout>
-          <Header
-            style={{
-              padding: 0,
-              background: colorBgContainer,
-            }}
-          >
-            할인 중인 상품
-          </Header>
           <Content
             style={{
               margin: '24px 16px 0',
