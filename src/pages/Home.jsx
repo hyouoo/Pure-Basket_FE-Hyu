@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Pagination, Row, Col, Carousel, theme, Flex, Divider } from 'antd';
-import { Header } from 'antd/es/layout/layout';
+import {
+  Pagination,
+  Row,
+  Col,
+  Carousel,
+  theme,
+  
+  Divider,
+  Typography,
+} from 'antd';
 import axios from 'axios';
 import Product from '../components/Product';
+
+const { Title } = Typography;
 
 const Home = () => {
   const [eventProducts, setEventProducts] = useState({});
@@ -23,7 +33,6 @@ const Home = () => {
     } = await axios.get(`http://localhost:8080/api/products?page=${page}`);
     setEventProducts(eventProducts);
     setProducts(products);
-    console.log(products);
     setIsLoading(false);
   };
 
@@ -33,16 +42,8 @@ const Home = () => {
 
   return (
     <>
-      {}
       <Divider orientation="center">
-        {/* <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        > */}
-        할인 중인 상품
-        {/* </Header> */}
+        <Title level={3}> 할인 중인 상품</Title>
       </Divider>
 
       {/* <Carousel autoplay> */}
@@ -61,7 +62,9 @@ const Home = () => {
       </Row>
       {/* </Carousel> */}
 
-      <Divider orientation="center">일반 상품</Divider>
+      <Divider orientation="center">
+        <Title level={3}>일반 상품</Title>
+      </Divider>
 
       <Row gutter={[24, 36]}>
         {isLoading
