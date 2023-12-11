@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { defaultInstance } from '../../network/axios';
 import { Divider, List } from 'antd';
+import Recipe from '../../components/Recipe';
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
@@ -34,16 +34,7 @@ const Recipes = () => {
           dataSource={recipes}
           renderItem={(item) => (
             <>
-              {/* ToDo: Recipe Component로 뽑아내기 */}
-              <Link to={`/recipes/${item.id}`}>
-                <List.Item
-                  key={item.name}
-                  extra={<img width={272} alt={item.name} src={item.imgUrl} />}
-                >
-                  <List.Item.Meta title={item.name} />
-                  {item.info}
-                </List.Item>
-              </Link>
+              <Recipe item={item} />
               <Divider />
             </>
           )}
