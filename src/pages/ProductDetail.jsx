@@ -14,6 +14,7 @@ const ProductDetail = () => {
   const [amount, setAmount] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const { token } = useRecoilValue(userState);
+  const jwtInstance = createJwtInstance(token);
 
   const fetchData = async (page = 1) => {
     const { data } = await defaultInstance.get(`/products/${productId}`);
@@ -26,11 +27,15 @@ const ProductDetail = () => {
   };
 
   const handlePurchase = async () => {
-    await createJwtInstance(token).post(
-      `/purchases`,
-      JSON.stringify({ purchaseList: [{ productId, amount }] })
-    );
+    await jwtInstance.post(`/purchases`, {
+      purchaseList: [{ productId, amount }],
+    });
     navigate('/purchase_list');
+  };
+
+  const handleAddToCart = async () => {
+    await jwtInstance.post(`/carts/${productId}`, { amount });
+    navigate('/carts');
   };
 
   useEffect(() => {
@@ -87,7 +92,9 @@ const ProductDetail = () => {
               <Button type="primary" onClick={handlePurchase}>
                 바로주문
               </Button>
-              <Button type="primary">장바구니 담기</Button>
+              <Button type="primary" onClick={handleAddToCart}>
+                장바구니 담기
+              </Button>
             </Flex>
           </section>
         </Flex>

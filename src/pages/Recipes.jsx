@@ -34,6 +34,7 @@ const Recipes = () => {
           dataSource={recipes}
           renderItem={(item) => (
             <>
+              {/* ToDo: Recipe Component로 뽑아내기 */}
               <Link to={`/recipes/${item.id}`}>
                 <List.Item
                   key={item.name}
