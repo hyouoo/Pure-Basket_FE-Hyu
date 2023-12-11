@@ -117,13 +117,18 @@ const LayoutComponent = () => {
               },
               {
                 key: 'part-2',
+                href: '/recipes',
+                title: '추천 레시피',
+              },
+              {
+                key: 'part-3',
                 href: '/carts',
                 title: '장바구니',
               },
               {
-                key: 'part-3',
-                href: '/recipes',
-                title: '추천 레시피',
+                key: 'part-4',
+                href: '/purchase_list',
+                title: '주문내역',
               },
               // {
               //   key: 'part-1',

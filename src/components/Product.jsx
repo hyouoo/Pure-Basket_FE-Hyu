@@ -17,7 +17,7 @@ const Product = ({ product }) => {
       <Link to={`/products/${product.id}`}>
         <Image preview={false} width={200} src={`${product.images[0]}`} />
         <h3>{product.name}</h3>
-        <p>{product.price}원</p>
+        <p>{product.price.toLocaleString('ko-KR')}원</p>
       </Link>
     </Wrapper>
   );

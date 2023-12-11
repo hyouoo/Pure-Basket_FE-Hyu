@@ -10,6 +10,7 @@ import NotFound from '../pages/NotFound';
 import Recipes from '../pages/Recipes';
 import ProductDetail from '../pages/ProductDetail';
 import RecipeDetail from '../pages/RecipeDetail';
+import PurchaseList from '../pages/PurchaseList';
 
 const Router = () => {
   return (
@@ -25,6 +26,7 @@ const Router = () => {
           <Route path="/carts" element={<Carts />} />
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/recipes/:recipeId" element={<RecipeDetail />} />
+          <Route path="/purchase_list" element={<PurchaseList />} />
 
           {/* <Route path="about" element={<About />} /> */}
           {/* <Route path="contact" element={<Contact />} /> */}
