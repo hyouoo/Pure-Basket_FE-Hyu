@@ -101,20 +101,25 @@ const LayoutComponent = () => {
               margin: '24px 16px 0',
             }}
           >
-            <div
+            <Flex
+              vertical
+              justify="start"
+              align="center"
               style={{
                 padding: 24,
-                minHeight: 360,
+                width: '100%',
+                minHeight: '85vh',
                 background: colorBgContainer,
               }}
             >
               <Outlet />
-            </div>
+            </Flex>
           </Content>
         </Layout>
       </Layout>
       <Footer
         style={{
+          height: '40px',
           textAlign: 'center',
         }}
       >
