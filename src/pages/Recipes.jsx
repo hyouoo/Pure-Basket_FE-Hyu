@@ -1,43 +1,53 @@
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
-import React from 'react';
-import { Avatar, List, Space } from 'antd';
-const data = Array.from({
-  length: 23,
-}).map((_, i) => ({
-  href: `/recipes/${i}`,
-  title: `recipe ${i}`,
-  content:
-    'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-}));
+import React, { useEffect, useState } from 'react';
+import { List } from 'antd';
+import { Link } from 'react-router-dom';
+import { defaultInstance } from '../network/axios';
 
 const Recipes = () => {
+  const [recipes, setRecipes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchData = async (page = 1) => {
+    const {
+      data: { content },
+    } = await defaultInstance.get(`/recipes`);
+
+    setRecipes(content);
+    console.log(recipes);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <List
-      itemLayout="vertical"
-      size="large"
-      pagination={{
-        onChange: (page) => {
-          console.log(page);
-        },
-        pageSize: 5,
-      }}
-      dataSource={data}
-      renderItem={(item) => (
-        <List.Item
-          key={item.title}
-          extra={
-            <img
-              width={272}
-              alt="logo"
-              src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-            />
-          }
-        >
-          <List.Item.Meta title={<a href={item.href}>{item.title}</a>} />
-          {item.content}
-        </List.Item>
+    <>
+      {isLoading || (
+        <List
+          style={{ width: '90%' }}
+          itemLayout="vertical"
+          size="large"
+          pagination={{
+            onChange: (page) => {},
+            pageSize: 5,
+          }}
+          dataSource={recipes}
+          renderItem={(item) => (
+            <Link to={`/recipes/${item.id}`}>
+              <List.Item
+                key={item.name}
+                extra={<img width={272} alt={item.name} src={item.imgUrl} />}
+              >
+                <List.Item.Meta title={item.name} />
+                {item.info}
+              </List.Item>
+            </Link>
+          )}
+        />
       )}
-    />
+    </>
   );
 };
 
