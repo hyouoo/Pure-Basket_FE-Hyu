@@ -16,7 +16,7 @@ const { Title } = Typography;
 
 const LayoutComponent = () => {
   const {
-    token: { colorBgContainer, colorPrimary, colorTertiary },
+    token: { colorBgContainer, colorPrimary, colorSecondary, colorTertiary },
   } = theme.useToken();
   const [user, setUser] = useRecoilState(userState);
   const [inputValue, setInputValue] = useState('');
@@ -45,15 +45,20 @@ const LayoutComponent = () => {
     <Layout>
       <Header
         style={{
-          backgroundColor: colorPrimary,
+          backgroundColor: colorSecondary,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          borderBottom: `1px solid ${colorPrimary}`,
         }}
       >
         <Link to="/">
-          <img src="" alt="" />
-          Pure Basket
+          <Flex justify="center" align="start">
+            <img src="pure-basket-logo.png" alt="" width={64} height={48} />
+            <Title style={{ color: colorPrimary }} level={2}>
+              Pure Basket
+            </Title>
+          </Flex>
         </Link>
         <Search
           placeholder="input search text"

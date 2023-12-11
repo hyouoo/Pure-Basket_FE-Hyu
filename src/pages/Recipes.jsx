@@ -1,6 +1,6 @@
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import { List } from 'antd';
+import { Divider, List } from 'antd';
 import { Link } from 'react-router-dom';
 import { defaultInstance } from '../network/axios';
 
@@ -35,15 +35,18 @@ const Recipes = () => {
           }}
           dataSource={recipes}
           renderItem={(item) => (
-            <Link to={`/recipes/${item.id}`}>
-              <List.Item
-                key={item.name}
-                extra={<img width={272} alt={item.name} src={item.imgUrl} />}
-              >
-                <List.Item.Meta title={item.name} />
-                {item.info}
-              </List.Item>
-            </Link>
+            <>
+              <Link to={`/recipes/${item.id}`}>
+                <List.Item
+                  key={item.name}
+                  extra={<img width={272} alt={item.name} src={item.imgUrl} />}
+                >
+                  <List.Item.Meta title={item.name} />
+                  {item.info}
+                </List.Item>
+              </Link>
+              <Divider />
+            </>
           )}
         />
       )}

@@ -16,11 +16,12 @@ root.render(
           theme={{
             token: {
               colorPrimary: '#77bb70',
-              colorSecondary: '#bcf69e',
+              colorSecondary: '#b3d3b0',
               colorTertiary: '#e5f0dd22',
               colorInfo: '#77bb70',
               colorSuccess: '#f0b13b',
               borderRadius: 8,
+              colorSplit: 'rgba(0, 0, 0, 0.38)',
             },
           }}
         >
