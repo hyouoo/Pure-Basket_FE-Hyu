@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { defaultInstance } from '../network/axios';
+import { defaultInstance } from '../../network/axios';
 import { Divider, List } from 'antd';
 
 const Recipes = () => {

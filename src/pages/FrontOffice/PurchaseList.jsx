@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { createJwtInstance } from '../network/axios';
+import { createJwtInstance } from '../../network/axios';
 import { useRecoilValue } from 'recoil';
-import { userState } from '../recoil/atoms';
+import { userState } from '../../recoil/atoms';
 import { Button, Flex, List, Skeleton, Typography } from 'antd';
 
 const { Title } = Typography;

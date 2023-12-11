@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { createJwtInstance, defaultInstance } from '../network/axios';
+import { createJwtInstance, defaultInstance } from '../../network/axios';
 import { useRecoilValue } from 'recoil';
-import { userState } from '../recoil/atoms';
+import { userState } from '../../recoil/atoms';
 import { Typography, Flex, Image, Divider, Button, InputNumber } from 'antd';
 
 const { Title, Paragraph } = Typography;
