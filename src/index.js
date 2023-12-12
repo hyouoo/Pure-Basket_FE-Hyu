@@ -1,13 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import GlobalStyle from './styles/GlobalStyle';
-import { ThemeProvider } from 'styled-components';
-import { theme } from './styles/theme';
-import { RecoilRoot } from 'recoil';
-import { ConfigProvider } from 'antd';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import GlobalStyle from "./styles/GlobalStyle";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./styles/theme";
+import { RecoilRoot } from "recoil";
+import { ConfigProvider } from "antd";
+import { QueryClientProvider, QueryClient } from "react-query";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const queryClient = new QueryClient();
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <RecoilRoot>
@@ -15,17 +17,19 @@ root.render(
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: '#77bb70',
-              colorSecondary: '#bcf69e',
-              colorTertiary: '#e5f0dd22',
-              colorInfo: '#77bb70',
-              colorSuccess: '#f0b13b',
+              colorPrimary: "#77bb70",
+              colorSecondary: "#bcf69e",
+              colorTertiary: "#e5f0dd22",
+              colorInfo: "#77bb70",
+              colorSuccess: "#f0b13b",
               borderRadius: 8,
             },
           }}
         >
           <GlobalStyle />
-          <App />
+          <QueryClientProvider client={queryClient}>
+            <App />
+          </QueryClientProvider>
         </ConfigProvider>
       </ThemeProvider>
     </RecoilRoot>

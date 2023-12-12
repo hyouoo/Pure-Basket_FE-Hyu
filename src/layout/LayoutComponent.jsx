@@ -1,13 +1,13 @@
-import { Link, Outlet } from 'react-router-dom';
-import React from 'react';
+import { Link, Outlet } from "react-router-dom";
+import React from "react";
 import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
   SmileOutlined,
-} from '@ant-design/icons';
-import { Layout, Anchor, theme, Button, Flex, Divider } from 'antd';
-import Search from 'antd/es/input/Search';
+} from "@ant-design/icons";
+import { Layout, Anchor, theme, Button, Flex, Divider } from "antd";
+import Search from "antd/es/input/Search";
 const { Header, Content, Footer, Sider } = Layout;
 
 const LayoutComponent = () => {
@@ -19,13 +19,13 @@ const LayoutComponent = () => {
     console.log(info?.source, value);
   };
   return (
-    <Layout>
+    <Layout style={{ height: "100vh" }}>
       <Header
         style={{
           backgroundColor: colorPrimary,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
         <Link to="/">
@@ -37,7 +37,7 @@ const LayoutComponent = () => {
           onSearch={onSearch}
           enterButton
           style={{
-            width: '400px',
+            width: "400px",
           }}
         />
         <Flex gap="small" wrap="wrap">
@@ -52,7 +52,7 @@ const LayoutComponent = () => {
       <Layout>
         <Sider
           style={{
-            margin: '8px',
+            margin: "8px",
             backgroundColor: colorTertiary,
           }}
           breakpoint="lg"
@@ -67,24 +67,24 @@ const LayoutComponent = () => {
           <div />
           <Anchor
             style={{
-              marginTop: '8px',
+              marginTop: "8px",
               backgroundColor: colorTertiary,
             }}
             items={[
               {
-                key: 'part-1',
-                href: '/',
+                key: "part-1",
+                href: "/",
                 title: `상품 조회`,
               },
               {
-                key: 'part-2',
-                href: '/carts',
-                title: '장바구니',
+                key: "part-2",
+                href: "/carts",
+                title: "장바구니",
               },
               {
-                key: 'part-3',
-                href: '/recipes',
-                title: '추천 레시피',
+                key: "part-3",
+                href: "/recipes",
+                title: "추천 레시피",
               },
               // {
               //   key: 'part-1',
@@ -98,7 +98,7 @@ const LayoutComponent = () => {
         <Layout>
           <Content
             style={{
-              margin: '24px 16px 0',
+              margin: "24px 16px 0",
             }}
           >
             <div
@@ -115,7 +115,7 @@ const LayoutComponent = () => {
       </Layout>
       <Footer
         style={{
-          textAlign: 'center',
+          textAlign: "center",
         }}
       >
         Pure Basket ©2023
