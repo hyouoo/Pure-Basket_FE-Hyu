@@ -39,7 +39,7 @@ const LayoutComponent = () => {
   };
 
   return (
-    <Layout>
+    <Layout style={{ height: "100vh" }}>
       <Header
         style={{
           backgroundColor: colorSecondary,
@@ -63,7 +63,7 @@ const LayoutComponent = () => {
           onSearch={onSearch}
           enterButton
           style={{
-            width: '400px',
+            width: "400px",
           }}
           value={inputValue}
         />
@@ -88,7 +88,7 @@ const LayoutComponent = () => {
       <Layout>
         <Sider
           style={{
-            margin: '8px',
+            margin: "8px",
             backgroundColor: colorTertiary,
             borderRight: '1px solid rgba(0, 0, 0, 0.08)',
           }}
@@ -104,13 +104,13 @@ const LayoutComponent = () => {
           <div />
           <Anchor
             style={{
-              marginTop: '8px',
+              marginTop: "8px",
               backgroundColor: colorTertiary,
             }}
             items={[
               {
-                key: 'part-1',
-                href: '/',
+                key: "part-1",
+                href: "/",
                 title: `상품 조회`,
               },
               {
@@ -139,7 +139,7 @@ const LayoutComponent = () => {
         <Layout>
           <Content
             style={{
-              margin: '24px 16px 0',
+              margin: "24px 16px 0",
             }}
           >
             <Flex
