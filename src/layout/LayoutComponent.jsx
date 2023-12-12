@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { defaultInstance } from '../network/axios';
 import { useRecoilState } from 'recoil';
 import { userState } from '../recoil/atoms';
@@ -11,6 +11,7 @@ const { Title } = Typography;
 
 const LayoutComponent = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     token: { colorBgContainer, colorPrimary, colorSecondary, colorTertiary },
   } = theme.useToken();
@@ -74,14 +75,16 @@ const LayoutComponent = () => {
               <Button onClick={handleClick}>로그아웃</Button>
             </>
           ) : (
-            <>
-              <Link to="login">
-                <Button type="primary">로그인</Button>
-              </Link>
-              <Link to="signup">
-                <Button>회원가입</Button>
-              </Link>
-            </>
+            location.pathname.includes('admin') || (
+              <>
+                <Link to="login">
+                  <Button type="primary">로그인</Button>
+                </Link>
+                <Link to="signup">
+                  <Button>회원가입</Button>
+                </Link>
+              </>
+            )
           )}
         </Flex>
       </Header>
@@ -102,39 +105,70 @@ const LayoutComponent = () => {
           }}
         >
           <div />
-          <Anchor
-            style={{
-              marginTop: '8px',
-              backgroundColor: colorTertiary,
-            }}
-            items={[
-              {
-                key: 'part-1',
-                href: '/',
-                title: `상품 조회`,
-              },
-              {
-                key: 'part-2',
-                href: '/recipes',
-                title: '추천 레시피',
-              },
-              {
-                key: 'part-3',
-                href: '/carts',
-                title: '장바구니',
-              },
-              {
-                key: 'part-4',
-                href: '/purchase_list',
-                title: '주문내역',
-              },
-              // {
-              //   key: 'part-1',
-              //   href: '#part-1',
-              //   title: `상품 조회`,
-              // },
-            ]}
-          />
+          {location.pathname.includes('admin') ? (
+            <Anchor
+              style={{
+                marginTop: '8px',
+                backgroundColor: colorTertiary,
+              }}
+              items={[
+                {
+                  key: 'part-1',
+                  href: '/admin',
+                  title: `상품`,
+                },
+                {
+                  key: 'part-2',
+                  href: '/admin/recipes',
+                  title: '레시피',
+                },
+              ]}
+            />
+          ) : (
+            <Anchor
+              style={{
+                marginTop: '8px',
+                backgroundColor: colorTertiary,
+              }}
+              items={
+                !user.token
+                  ? [
+                      {
+                        key: 'part-1',
+                        href: '/',
+                        title: `상품 조회`,
+                      },
+                      {
+                        key: 'part-2',
+                        href: '/recipes',
+                        title: '추천 레시피',
+                      },
+                    ]
+                  : [
+                      {
+                        key: 'part-1',
+                        href: '/',
+                        title: `상품 조회`,
+                      },
+                      {
+                        key: 'part-2',
+                        href: '/recipes',
+                        title: '추천 레시피',
+                      },
+                      {
+                        key: 'part-3',
+                        href: '/carts',
+                        title: '장바구니',
+                      },
+                      {
+                        key: 'part-4',
+                        href: '/purchase_list',
+                        title: '주문내역',
+                      },
+                    ]
+              }
+            />
+          )}
         </Sider>
         <Layout>
           <Content

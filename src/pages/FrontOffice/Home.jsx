@@ -23,9 +23,9 @@ const Home = () => {
     fetchData(page);
   };
 
-  const {
-    token: { colorBgContainer, colorPrimary, colorTertiary },
-  } = theme.useToken();
+  // const {
+  //   token: { colorBgContainer, colorPrimary, colorTertiary },
+  // } = theme.useToken();
 
   const fetchData = async (page = 1) => {
     const {

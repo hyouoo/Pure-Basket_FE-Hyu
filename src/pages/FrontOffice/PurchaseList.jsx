@@ -14,6 +14,7 @@ const PurchaseList = () => {
   const { token } = useRecoilValue(userState);
 
   const fetchData = async () => {
+    setPage((prev) => prev + 1);
     const {
       data: { content },
     } = await createJwtInstance(token).get(`/purchases?page=${page}`);
@@ -33,7 +34,6 @@ const PurchaseList = () => {
 
   const onLoadMore = () => {
     setLoading(true);
-    setPage((prev) => prev + 1);
     fetchData();
   };
   const loadMore =
