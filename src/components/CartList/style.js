@@ -94,9 +94,3 @@ export const TotalPrice = styled.p`
 font-size: 20px;
 flex-grow: 1;
 `;
-
-
-
-
-
-

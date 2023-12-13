@@ -1,11 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import {Button, Table} from 'antd';
-import { useRecoilValue } from 'recoil';
-import { userState } from '../../recoil/atoms';
-import { createJwtInstance, defaultInstance } from '../../network/axios';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {Button} from 'antd';
+import {useRecoilValue} from 'recoil';
+import {userState} from '../../recoil/atoms';
+import {createJwtInstance} from '../../network/axios';
 import CartItem from "../../components/CartList/CartItem";
+import styled from "styled-components";
 
+const Summary = styled.div`
+  position: relative;
+  width: 250px;
+  height: 300px;
+  margin-left: 50px;
+  padding: 10px;
+  border: 2px solid gainsboro;
+  border-radius: 20px;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+`;
+const Fee = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+const PurchaseButton = styled.div`
+  font-family: 'Dokdo';
+  font-size: 20px;
+  width: 200px;
+  height: 50px;
+  border: 1px solid #77bb70;
+  border-radius: 10px;
+  background-color: #d4ffb3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Carts = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -33,11 +65,22 @@ const Carts = () => {
     const navigate = useNavigate();
     const {token} = useRecoilValue(userState);
     const jwtInstance = createJwtInstance(token);
+
     const getCarts = async () => {
-        const { data } = await jwtInstance.get(`/api/carts`)
+        const {data} = await jwtInstance.get(`/api/carts`)
         setCarts(data);
         setIsLoading(false);
     }
+    const handlePurchase = async () => {
+      await jwtInstance.post(`/api/purchases`, {
+        purchaseList: [{ productId, amount }]
+      })
+      navigate('/purchase_list');
+    }
+
+    const shipping = 3000;
+    const totalPrice = carts?.reduce(
+      (accumulator, cart) => accumulator + (cart.price * cart.amount), 0);
 
     useEffect(() => {
         getCarts();
@@ -58,13 +101,28 @@ const Carts = () => {
                     {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                 </span>
             </div>
-            <div>
+            <div style={{display: 'flex', justifyContent:'space-around'}}>
                 {/*<Table rowSelection={rowSelection} columns={columns} dataSource={data}/>*/}
-                {isLoading || (
-                    carts.map(cart => {
-                        return <CartItem cart={cart} />
-                    })
-                )}
+                <div>
+                    {isLoading || (
+                        carts?.map(cart => {
+                            return <CartItem key={cart.id} instance={jwtInstance} cart={cart}/>
+                        })
+                    )}
+                </div>
+                <Summary>
+                    <p style={{fontSize: '20px', fontStyle: 'Bold'}}>주문 내역</p>
+                    <Fee>
+                    <span>상품 금액</span><span>{totalPrice.toLocaleString('ko-KR')}원</span>
+                    </Fee>
+                    <Fee>
+                      <div>배송료</div><div>{shipping.toLocaleString('ko-KR')}원</div>
+                    </Fee>
+                    <Fee>
+                      <div>합계</div><div>{(totalPrice + shipping).toLocaleString('ko-KR')}원</div>
+                    </Fee>
+                    <PurchaseButton onClick={handlePurchase}>주문하기</PurchaseButton>
+                </Summary>
             </div>
         </div>
     );
