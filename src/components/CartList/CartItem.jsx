@@ -7,7 +7,7 @@ const CartItem = ({ instance, cart }) => {
   const [amount, setAmount] = useState(cart.amount);
   const totalPrice = cart.price * amount;
 
-  const onChange = (e) => {};
+  const onChange = () => {};
   const onClickMinus = () => {
     setAmount(amount - 1);
   };

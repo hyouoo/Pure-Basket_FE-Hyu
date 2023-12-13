@@ -27,7 +27,6 @@ const Fee = styled.div`
   justify-content: space-between;
 `;
 const PurchaseButton = styled.div`
-  font-family: 'Dokdo';
   font-size: 20px;
   width: 200px;
   height: 50px;
@@ -42,7 +41,7 @@ const PurchaseButton = styled.div`
 const Carts = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [carts, setCarts] = useState();
+    const [carts, setCarts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const start = () => {
         setLoading(true);
