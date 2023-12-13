@@ -73,7 +73,7 @@ const Carts = () => {
     }
     const handlePurchase = async () => {
       await jwtInstance.post(`/api/purchases`, {
-        purchaseList: [{ productId, amount }]
+        // purchaseList: [{ productId, amount }]
       })
       navigate('/purchase_list');
     }
