@@ -18,19 +18,24 @@ const Home = () => {
   const [products, setProducts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [current, setCurrent] = useState(26);
+  const [currentEvent, setCurrentEvent] = useState(1)
   const onChange = (page) => {
     setCurrent(page);
     fetchData(page);
+  };
+  const onChangeEvent = (eventPage) => {
+      setCurrentEvent(eventPage);
+      fetchData(eventPage);
   };
 
   const {
     token: { colorBgContainer, colorPrimary, colorTertiary },
   } = theme.useToken();
 
-  const fetchData = async (page = 1) => {
+  const fetchData = async (eventPage = 1, page = 1) => {
     const {
       data: { eventProducts, products },
-    } = await defaultInstance.get(`/products?page=${page}`);
+    } = await defaultInstance.get(`/api/products?eventPage=${eventPage}&page=${page}`);
     setEventProducts(eventProducts);
     setProducts(products);
     setIsLoading(false);
@@ -60,6 +65,12 @@ const Home = () => {
             })}
         {/* </Flex> */}
       </Row>
+        <Pagination
+            defaultCurrent={1}
+            onChange={onChangeEvent}
+            showSizeChanger={false}
+            total={eventProducts.totalElements}
+        />
       {/* </Carousel> */}
 
       <Divider orientation="center">

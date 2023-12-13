@@ -25,7 +25,7 @@ const Login = () => {
 
   const handleSubmit = async (data) => {
     defaultInstance
-      .post(`/auth/login`, { ...data })
+      .post(`/api/auth/login`, { ...data })
       .then((res) => {
         const token = res.headers.authorization;
         const payload = token.substring(

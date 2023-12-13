@@ -7,7 +7,7 @@ border: 2px solid gainsboro;
 border-radius: 20px;
 background-color: whitesmoke;
 box-sizing: border-box;
-width: 700px;
+width: 550px;
 display: flex;
 flex-direction: row;
 overflow: hidden;
@@ -16,7 +16,7 @@ overflow: hidden;
 export const CartItem = styled.div`
 position: relative;
 width: 100%;
-height: 160px;
+height: 120px;
 display: flex;
 flex-direction: row;
 align-items: center;
@@ -26,7 +26,7 @@ justify-content: flex-start;
 
 export const Info = styled.div`
 flex-grow: 3;
-height: 160px;
+height: 110px;
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;
@@ -37,26 +37,26 @@ export const Summary = styled.div`
 `;
 
 export const ProductImage = styled.img`
-margin: 15px;
-width: 130px;
-height: 130px;
+margin: 10px;
+width: 100px;
+height: 100px;
 `;
 
 export const ProductName = styled.div`
-font-size: 30px;
+font-size: 20px;
 `;
 
 export const Price = styled.div`
-flex-basis: 50px;
-font-size: 25px;
+flex-basis: 40px;
+font-size: 15px;
 `;
 
 export const HandleAmount = styled.div`
-width: 100px;
+width: 80px;
 display: flex;
 flex-direction: row;
 align-items: center;
-justify-content: flex-start;
+justify-content: space-between;
 `;
 
 export const Minus = styled.div`
@@ -84,8 +84,6 @@ cursor: default;
 
 export const Amount = styled.div`
 font-size: 15px;
-margin-left: 5px;
-margin-right: 5px;
 `;
 
 export const Delete = styled.img`
@@ -93,7 +91,7 @@ export const Delete = styled.img`
 `;
 
 export const TotalPrice = styled.p`
-font-size: 25px;
+font-size: 20px;
 flex-grow: 1;
 `;
 
