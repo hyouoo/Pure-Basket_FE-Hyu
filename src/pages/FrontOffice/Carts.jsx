@@ -1,77 +1,136 @@
-import React, { useState } from 'react';
-import { Button, Table } from 'antd';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Checkbox, Flex } from "antd";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../recoil/atoms";
+import { createJwtInstance } from "../../network/axios";
+import CartItem from "../../components/CartList/CartItem";
+import styled from "styled-components";
 
-const columns = [
-  {
-    title: '상품명',
-    dataIndex: 'name',
-  },
-  {
-    title: '수량',
-    dataIndex: 'quantity',
-  },
-  {
-    title: '가격',
-    dataIndex: 'price',
-  },
-];
+const Summary = styled.div`
+  position: relative;
+  width: 250px;
+  height: 300px;
+  margin-left: 50px;
+  padding: 10px 25px 10px 25px;
+  border: 2px solid gainsboro;
+  border-radius: 20px;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
 
-const data = [];
-
-for (let i = 0; i < 21; i++) {
-  data.push({
-    key: i,
-    name: `Cart Item ${i}`,
-    quantity: 32,
-    price: `Price ${i * 1000} `,
-  });
-}
+const PurchaseButton = styled.div`
+  font-size: 20px;
+  width: 200px;
+  height: 50px;
+  border: 1px solid #77bb70;
+  border-radius: 10px;
+  background-color: #d4ffb3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
 
 const Carts = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const start = () => {
-    setLoading(true);
-    // ajax request after empty completing
-    setTimeout(() => {
-      setSelectedRowKeys([]);
-      setLoading(false);
-    }, 1000);
+  const navigate = useNavigate();
+  const [carts, setCarts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [checkItems, setCheckItems] = useState([]);
+  const { token } = useRecoilValue(userState);
+  const jwtInstance = createJwtInstance(token);
+
+  const shipping = 100;
+  let totalPrice = carts
+      ?.filter((cart) => checkItems.includes(cart.id))
+      .reduce((sum, cart) => sum + cart.price * cart.amount, 0);
+
+  const checkboxHandle = (event) => {
+    const item = event.target.id;
+    const isChecked = event.target.checked;
+    setCheckItems((prev) => {
+      if (isChecked) {
+        return [...prev, item];
+      } else {
+        return prev.filter((el) => el !== item);
+      }
+    });
   };
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
+
+  const changeAmounts = (cart, newAmount) => {
+    setCarts((prevCarts) => {
+      const updatedCarts = [...prevCarts];
+      const cartIndex = updatedCarts.findIndex((item) => item.id === cart.id);
+
+      if (cartIndex !== -1) {
+        updatedCarts[cartIndex] = {
+          ...updatedCarts[cartIndex],
+          amount: newAmount,
+        };
+      }
+      return updatedCarts;
+    });
   };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
+
+  const getCarts = async () => {
+    const { data } = await jwtInstance.get(`/api/carts`);
+    setCarts(data);
+    setIsLoading(false);
   };
-  const hasSelected = selectedRowKeys.length > 0;
+
+  const purchaseList = carts
+      ?.filter((cart) => checkItems.includes(cart.id))
+      .map((cart) => ({ productId: cart.id, amount: cart.amount }));
+
+  const handlePurchase = async () => {
+    await jwtInstance.post(`/api/purchases`, {purchaseList: purchaseList});
+    navigate("/purchase_list");
+  };
+
+  useEffect(() => {
+    getCarts();
+  }, []);
+
   return (
-    <div>
-      <div
-        style={{
-          marginBottom: 16,
-        }}
-      >
-        <Button
-          type="primary"
-          onClick={start}
-          disabled={!hasSelected}
-          loading={loading}
-        >
-          Reload
-        </Button>
-        <span
-          style={{
-            marginLeft: 8,
-          }}
-        >
-          {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-        </span>
+      <div>
+        <Flex justify="space-around">
+          <div>
+            {isLoading ||
+                carts?.map((cart) => (
+                    <Flex>
+                      <Checkbox
+                          id={cart.id}
+                          onChange={checkboxHandle}
+                          style={{ marginRight: "15px" }}
+                      />
+                      <CartItem
+                          instance={jwtInstance}
+                          cart={cart}
+                          changeAmounts={changeAmounts}
+                      />
+                    </Flex>
+                ))}
+          </div>
+          <Summary>
+            <div style={{ textAlign: "center", fontSize: "20px" }}>주문 내역</div>
+            <Flex justify="space-between">
+              <div>상품 금액</div>
+              <div>{totalPrice.toLocaleString("ko-KR")}원</div>
+            </Flex>
+            <Flex justify="space-between">
+              <div>배송료</div>
+              <div>{shipping.toLocaleString("ko-KR")}원</div>
+            </Flex>
+            <Flex justify="space-between">
+              <div>합계</div>
+              <div>{(totalPrice + shipping).toLocaleString("ko-KR")}원</div>
+            </Flex>
+            <PurchaseButton onClick={handlePurchase}>주문하기</PurchaseButton>
+          </Summary>
+        </Flex>
       </div>
-      <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
-    </div>
   );
 };
 
