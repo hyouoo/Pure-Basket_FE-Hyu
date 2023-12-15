@@ -31,7 +31,7 @@ const LayoutComponent = () => {
   // ToDo: 검색 결과 페이지 만들기
   const onSearch = async () => {
     const data = await defaultInstance.get(
-      `/products/search?query=${inputValue}`
+      `/api/products/search?query=${inputValue}`
     );
     setInputValue('');
   };

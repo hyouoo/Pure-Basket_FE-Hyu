@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { AiOutlinePlus, AiOutlineMinus, AiOutlineDelete } from "react-icons/ai";
 
 export const CartItemRoot = styled.div`
 position: relative;
@@ -32,12 +31,9 @@ flex-direction: column;
 justify-content: space-evenly;
 `;
 
-export const Summary = styled.div`
-
-`;
-
 export const ProductImage = styled.img`
 margin: 10px;
+padding-left: 10px;
 width: 100px;
 height: 100px;
 `;
@@ -84,10 +80,6 @@ cursor: default;
 
 export const Amount = styled.div`
 font-size: 15px;
-`;
-
-export const Delete = styled.img`
-
 `;
 
 export const TotalPrice = styled.p`

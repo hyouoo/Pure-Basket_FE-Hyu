@@ -17,7 +17,7 @@ const ProductDetail = () => {
   const jwtInstance = createJwtInstance(token);
 
   const fetchData = async (page = 1) => {
-    const { data } = await defaultInstance.get(`/products/${productId}`);
+    const { data } = await defaultInstance.get(`/api/products/${productId}`);
     setProduct(data);
     setIsLoading(false);
   };
@@ -27,14 +27,14 @@ const ProductDetail = () => {
   };
 
   const handlePurchase = async () => {
-    await jwtInstance.post(`/purchases`, {
+    await jwtInstance.post(`/api/purchases`, {
       purchaseList: [{ productId, amount }],
     });
     navigate('/purchase_list');
   };
 
   const handleAddToCart = async () => {
-    await jwtInstance.post(`/carts/${productId}`, { amount });
+    await jwtInstance.post(`/api/carts/${productId}`, { amount });
     navigate('/carts');
   };
 
