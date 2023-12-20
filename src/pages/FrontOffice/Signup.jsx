@@ -21,7 +21,7 @@ const Signup = () => {
 
   const handleSubmit = async (data) => {
     defaultInstance
-      .post(`/auth/signup`, { ...data })
+      .post(`/api/auth/signup`, { ...data })
       .then(() => navigate('/login'))
       .catch((error) => {
         setText(error.toString());
