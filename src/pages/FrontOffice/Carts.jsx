@@ -42,7 +42,7 @@ const Carts = () => {
   const { token } = useRecoilValue(userState);
   const jwtInstance = createJwtInstance(token);
 
-  const shipping = 100;
+  const shipping = 500;
   let totalPrice = carts
       ?.filter((cart) => checkItems.includes(cart.id))
       .reduce((sum, cart) => sum + cart.price * cart.amount, 0);
