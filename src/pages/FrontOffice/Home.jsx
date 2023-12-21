@@ -27,10 +27,10 @@ const Home = () => {
   //   token: { colorBgContainer, colorPrimary, colorTertiary },
   // } = theme.useToken();
 
-  const fetchData = async (page = 1) => {
+  const fetchData = async (eventPage = 1, page = 1) => {
     const {
       data: { eventProducts, products },
-    } = await defaultInstance.get(`/products?page=${page}`);
+    } = await defaultInstance.get(`/api/products?eventPage=${eventPage}&page=${page}`);
     setEventProducts(eventProducts);
     setProducts(products);
     setIsLoading(false);

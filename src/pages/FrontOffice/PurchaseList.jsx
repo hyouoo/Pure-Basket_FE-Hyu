@@ -17,7 +17,7 @@ const PurchaseList = () => {
     setPage((prev) => prev + 1);
     const {
       data: { content },
-    } = await createJwtInstance(token).get(`/purchases?page=${page}`);
+    } = await createJwtInstance(token).get(`/api/purchases?page=${page}`);
 
     setInitLoading(false);
     setData((prev) => [...prev, ...content]);

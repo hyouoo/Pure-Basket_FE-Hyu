@@ -10,7 +10,7 @@ const Recipes = () => {
   const fetchData = async (page = 1) => {
     const {
       data: { content },
-    } = await defaultInstance.get(`/recipes`);
+    } = await defaultInstance.get(`/api/recipes`);
 
     setRecipes(content);
     setIsLoading(false);

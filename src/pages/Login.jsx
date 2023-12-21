@@ -29,7 +29,7 @@ const Login = () => {
 
   const handleSubmit = async (data) => {
     defaultInstance
-      .post(`/${isBackOffice.current ? 'auth/admin' : 'auth'}/login`, {
+      .post(`/${isBackOffice.current ? 'api/auth/admin' : 'api/auth'}/login`, {
         ...data,
       })
       .then((res) => {

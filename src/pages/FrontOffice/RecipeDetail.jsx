@@ -15,14 +15,14 @@ const RecipeDetail = () => {
   const { token } = useRecoilValue(userState);
 
   const fetchData = async (page = 1) => {
-    const { data } = await defaultInstance.get(`/recipes/${recipeId}`);
+    const { data } = await defaultInstance.get(`/api/recipes/${recipeId}`);
     // console.log(data);
     setRecipe(data);
     setIsLoading(false);
   };
 
   const handleClick = async () => {
-    await createJwtInstance(token).post(`/carts/recipes/${recipeId}`);
+    await createJwtInstance(token).post(`/api/carts/recipes/${recipeId}`);
     navigate('/purchase_list');
   };
 

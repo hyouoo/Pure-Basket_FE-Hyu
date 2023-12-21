@@ -17,7 +17,7 @@ const ProductDetail = () => {
   const jwtInstance = createJwtInstance(token);
 
   const fetchData = async (page = 1) => {
-    const { data } = await defaultInstance.get(`/products/${productId}`);
+    const { data } = await defaultInstance.get(`/api/products/${productId}`);
     setProduct(data);
     setIsLoading(false);
   };
