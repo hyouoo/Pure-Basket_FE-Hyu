@@ -14,7 +14,7 @@ const AdminRecipe = () => {
   const fetchData = async () => {
     const {
       data: { content },
-    } = await createJwtInstance(token).get(`/backoffice/recipes`);
+    } = await createJwtInstance(token).get(`/api/backoffice/recipes`);
     setRecipes(content);
     console.log(content);
     setIsLoading(false);

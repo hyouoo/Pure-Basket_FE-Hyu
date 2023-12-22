@@ -17,17 +17,20 @@ const Home = () => {
   const [eventProducts, setEventProducts] = useState({});
   const [products, setProducts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [current, setCurrent] = useState(26);
+  const [current, setCurrent] = useState(1);
+  const [eventCurrent, setEventCurrent] = useState(1);
+  
   const onChange = (page) => {
     setCurrent(page);
-    fetchData(page);
+    fetchData(eventCurrent, page);
   };
 
-  // const {
-  //   token: { colorBgContainer, colorPrimary, colorTertiary },
-  // } = theme.useToken();
+  const onChangeEvent = (page) => {
+    setEventCurrent(page);
+    fetchData(page, current);
+  };
 
-  const fetchData = async (eventPage = 1, page = 1) => {
+  const fetchData = async (eventPage, page) => {
     const {
       data: { eventProducts, products },
     } = await defaultInstance.get(`/api/products?eventPage=${eventPage}&page=${page}`);
@@ -37,7 +40,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(eventCurrent, current);
   }, []);
 
   return (
@@ -45,9 +48,6 @@ const Home = () => {
       <Divider orientation="center">
         <Title level={3}> 할인 중인 상품</Title>
       </Divider>
-
-      {/* <Carousel autoplay> */}
-      {/* <Flex gap="middle" vertical={false} justify="center"> */}
       <Row gutter={[24, 36]}>
         {isLoading
           ? null
@@ -58,14 +58,17 @@ const Home = () => {
                 </Col>
               );
             })}
-        {/* </Flex> */}
       </Row>
-      {/* </Carousel> */}
+      <Pagination
+        defaultCurrent={1}
+        onChange={onChangeEvent}
+        showSizeChanger={false}
+        total={eventProducts.totalElements}
+      />
 
       <Divider orientation="center">
         <Title level={3}>일반 상품</Title>
       </Divider>
-
       <Row gutter={[24, 36]}>
         {isLoading
           ? null
@@ -77,7 +80,6 @@ const Home = () => {
               );
             })}
       </Row>
-
       <Pagination
         defaultCurrent={1}
         onChange={onChange}

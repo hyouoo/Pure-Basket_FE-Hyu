@@ -15,7 +15,7 @@ const AdminHome = () => {
   const fetchData = async () => {
     const {
       data: { products, eventProducts },
-    } = await createJwtInstance(token).get(`/backoffice/products`);
+    } = await createJwtInstance(token).get(`/api/backoffice/products`);
     setEventProducts(eventProducts.content);
     setProducts(products.content);
     console.log(eventProducts);

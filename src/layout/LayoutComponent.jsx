@@ -6,6 +6,7 @@ import { userState } from '../recoil/atoms';
 
 import { Layout, Anchor, theme, Button, Flex, Typography } from 'antd';
 import Search from 'antd/es/input/Search';
+import Sse from '../components/Sse';
 const { Header, Content, Footer, Sider } = Layout;
 const { Title } = Typography;
 
@@ -30,7 +31,7 @@ const LayoutComponent = () => {
   // ToDo: 검색 결과 페이지 만들기
   const onSearch = async () => {
     const data = await defaultInstance.get(
-      `/products/search?query=${inputValue}`
+      `/api/products/search?query=${inputValue}`
     );
     setInputValue('');
   };
@@ -71,6 +72,7 @@ const LayoutComponent = () => {
         <Flex gap="small" wrap="wrap">
           {user.email ? (
             <>
+              <Sse />
               <Title level={4}>{user.email}</Title>
               <Button onClick={handleClick}>로그아웃</Button>
             </>
