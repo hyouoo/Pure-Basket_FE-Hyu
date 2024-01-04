@@ -29,11 +29,12 @@ const LayoutComponent = () => {
 
   // ToDo: 검색 결과 페이지 만들기
   const onSearch = async () => {
-    const data = await defaultInstance.get(
-      `/products/search?query=${inputValue}`
-    );
+    // const data = await defaultInstance.get(
+    //   `/products/search?query=${inputValue}`
+    // );
+
     setInputValue('');
-    navigate(`/products/search?query=${inputValue}`)
+    navigate(`/search?query=${inputValue}`)
   };
 
   const handleChange = (e) => {

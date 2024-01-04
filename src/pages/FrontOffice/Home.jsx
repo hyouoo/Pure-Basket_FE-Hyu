@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { defaultInstance } from '../../network/axios';
+import { useSearchParams } from 'react-router-dom';
 import {
   Pagination,
   Row,
   Col,
   Carousel,
-  theme,
+  Flex,
   Divider,
   Typography,
 } from 'antd';
@@ -18,6 +19,7 @@ const Home = () => {
   const [products, setProducts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [current, setCurrent] = useState(26);
+  const [searchParams, setSearchParams] = useSearchParams();
   const onChange = (page) => {
     setCurrent(page);
     fetchData(page);
@@ -27,10 +29,14 @@ const Home = () => {
   //   token: { colorBgContainer, colorPrimary, colorTertiary },
   // } = theme.useToken();
 
+  const query = searchParams.get('query');
+  
   const fetchData = async (page = 1) => {
+    const api = query ? `/products/search?query=${query}&page=${page}` : `/products?page=${page}`;
+
     const {
       data: { eventProducts, products },
-    } = await defaultInstance.get(`/products?page=${page}`);
+    } = await defaultInstance.get(api);
     setEventProducts(eventProducts);
     setProducts(products);
     setIsLoading(false);
@@ -38,10 +44,16 @@ const Home = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [searchParams]);
 
   return (
     <>
+      {query ? (
+        <div style={{width: "100%"}}>
+          <Title level={2}> 검색어: {query}</Title>
+        </div>
+     ) : null
+      }
       <Divider orientation="center">
         <Title level={3}> 할인 중인 상품</Title>
       </Divider>
