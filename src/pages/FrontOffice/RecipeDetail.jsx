@@ -23,7 +23,7 @@ const RecipeDetail = () => {
 
   const handleClick = async () => {
     await createJwtInstance(token).post(`/carts/recipes/${recipeId}`);
-    navigate('/purchase_list');
+    navigate('/carts');
   };
 
   useEffect(() => {
@@ -33,11 +33,11 @@ const RecipeDetail = () => {
   return (
     isLoading || (
       <>
-        <Flex gap="middle">
+        <Flex gap='middle'>
           <section>
-            <Flex gap="middle" vertical>
+            <Flex gap='middle' vertical>
               <Image preview={false} width={200} src={`${recipe.imgUrl}`} />
-              <Button onClick={handleClick} type="primary">
+              <Button onClick={handleClick} type='primary'>
                 관련 상품 장바구니 담기
               </Button>
             </Flex>
@@ -53,8 +53,8 @@ const RecipeDetail = () => {
         <Title level={4}>관련 상품</Title>
         <List
           style={{ width: '90%' }}
-          itemLayout="vertical"
-          size="large"
+          itemLayout='vertical'
+          size='large'
           dataSource={recipe.products}
           renderItem={(item) => (
             <Link to={`/products/${item.id}`}>
