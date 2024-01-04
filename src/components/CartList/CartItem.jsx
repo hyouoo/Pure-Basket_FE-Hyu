@@ -3,22 +3,29 @@ import * as ST from "./style";
 import { AiOutlineDelete } from "react-icons/ai";
 import { InputNumber } from "antd";
 import { Link } from "react-router-dom";
+import { userState } from "../../recoil/atoms";
+import { useRecoilValue } from "recoil";
+import { createJwtInstance } from "../../network/axios";
 
-const CartItem = ({ instance, cart, changeAmounts }) => {
+const CartItem = ({ cart, changeAmounts, onDelete }) => {
     const [amount, setAmount] = useState(cart.amount);
+    const { token } = useRecoilValue(userState);
+    
+    const jwtInstance = createJwtInstance(token);
     const totalPrice = cart.price * amount;
+
 
     const onChange = (newAmount) => {
         setAmount(newAmount);
         changeAmounts(cart, newAmount);
         setTimeout(() => {
-            instance.put(`carts/${cart.id}`, { amount });
+            jwtInstance.put(`carts/${cart.id}`, { amount });
         }, 1500);
     };
 
     const handleDelete = async () => {
-        await instance.delete(`carts/${cart.id}`);
-        window.location.reload();
+        await jwtInstance.delete(`carts/${cart.id}`);
+        onDelete(cart.id);
     };
 
     return (

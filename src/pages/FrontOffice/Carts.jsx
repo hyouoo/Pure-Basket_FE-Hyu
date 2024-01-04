@@ -80,6 +80,10 @@ const Carts = () => {
     setIsLoading(false);
   };
 
+  const onDelete = (cartId) => {
+      setCarts(prev => prev.filter(cart => cart.id !== cartId));
+  }
+
   const purchaseList = carts
       ?.filter((cart) => checkItems.includes(cart.id))
       .map((cart) => ({ productId: cart.id, amount: cart.amount }));
@@ -99,16 +103,16 @@ const Carts = () => {
           <div>
             {isLoading ||
                 carts?.map((cart) => (
-                    <Flex>
+                    <Flex style={{ marginBottom: "8px" }}>
                       <Checkbox
                           id={cart.id}
                           onChange={checkboxHandle}
                           style={{ marginRight: "15px" }}
                       />
                       <CartItem
-                          instance={jwtInstance}
                           cart={cart}
                           changeAmounts={changeAmounts}
+                          onDelete={onDelete}
                       />
                     </Flex>
                 ))}
