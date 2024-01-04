@@ -52,9 +52,9 @@ const PurchaseList = () => {
   return (
     <List
       style={{ width: '80%' }}
-      className="demo-loadmore-list"
+      className='demo-loadmore-list'
       loading={initLoading}
-      itemLayout="horizontal"
+      itemLayout='horizontal'
       loadMore={loadMore}
       dataSource={data}
       renderItem={(item) => (
@@ -66,15 +66,19 @@ const PurchaseList = () => {
         >
           <Skeleton title={false} loading={item.loading} active>
             <List.Item.Meta
+              style={{ color: 'black' }}
               title={
                 <a href={`/products/${item.productId}`}>
-                  <Title level={5}>{item.name}</Title>
+                  {/* <Title level={5}>{item.name}</Title> */}
+                  <Title level={5}>{`주문일자: ${new Date(
+                    item.purchasedAt
+                  ).toLocaleString()}`}</Title>
                 </a>
               }
-              description={new Date(item.purchasedAt).toLocaleString()}
+              // description={`주문일자: ${new Date(item.purchasedAt).toLocaleString()}`}
             />
             <Flex gap={32}>
-              <div>수량: {item.amount}개</div>
+              {/* <div>수량: {item.amount}개</div> */}
               {/* <div>가격: {item.price.toLocaleString()}원</div> */}
               <Title level={5}>
                 총 가격: {item.totalPrice.toLocaleString()}원

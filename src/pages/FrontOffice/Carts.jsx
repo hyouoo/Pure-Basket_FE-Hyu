@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Checkbox, Flex } from "antd";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../recoil/atoms";
-import { createJwtInstance } from "../../network/axios";
-import CartItem from "../../components/CartList/CartItem";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Checkbox, Flex } from 'antd';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../recoil/atoms';
+import { createJwtInstance } from '../../network/axios';
+import CartItem from '../../components/CartList/CartItem';
+import styled from 'styled-components';
+import { List } from 'antd';
 
 const Summary = styled.div`
   position: relative;
@@ -21,7 +22,7 @@ const Summary = styled.div`
   justify-content: space-around;
 `;
 
-const PurchaseButton = styled.div`
+const PurchaseButton = styled.button`
   font-size: 20px;
   width: 200px;
   height: 50px;
@@ -31,7 +32,6 @@ const PurchaseButton = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 `;
 
 const Carts = () => {
@@ -44,8 +44,8 @@ const Carts = () => {
 
   const shipping = 100;
   let totalPrice = carts
-      ?.filter((cart) => checkItems.includes(cart.id))
-      .reduce((sum, cart) => sum + cart.price * cart.amount, 0);
+    ?.filter((cart) => checkItems.includes(cart.id))
+    .reduce((sum, cart) => sum + cart.price * cart.amount, 0);
 
   const checkboxHandle = (event) => {
     const item = event.target.id;
@@ -75,22 +75,23 @@ const Carts = () => {
   };
 
   const getCarts = async () => {
-    const { data } = await jwtInstance.get(`carts`);
+    const { data } = await jwtInstance.get(`/carts`);
     setCarts(data);
+    setCheckItems(data);
     setIsLoading(false);
   };
 
   const onDelete = (cartId) => {
-      setCarts(prev => prev.filter(cart => cart.id !== cartId));
-  }
+    setCarts((prev) => prev.filter((cart) => cart.id !== cartId));
+  };
 
   const purchaseList = carts
-      ?.filter((cart) => checkItems.includes(cart.id))
-      .map((cart) => ({ productId: cart.id, amount: cart.amount }));
+    ?.filter((cart) => checkItems.includes(cart.id))
+    .map((cart) => ({ productId: cart.id, amount: cart.amount }));
 
   const handlePurchase = async () => {
-    await jwtInstance.post(`purchases`, {purchaseList: purchaseList});
-    navigate("/purchase_list");
+    await jwtInstance.post(`purchases`, { purchaseList: purchaseList });
+    navigate('/purchase_list');
   };
 
   useEffect(() => {
@@ -98,43 +99,48 @@ const Carts = () => {
   }, []);
 
   return (
-      <div>
-        <Flex justify="space-around">
-          <div>
-            {isLoading ||
-                carts?.map((cart) => (
-                    <Flex style={{ marginBottom: "8px" }}>
-                      <Checkbox
-                          id={cart.id}
-                          onChange={checkboxHandle}
-                          style={{ marginRight: "15px" }}
-                      />
-                      <CartItem
-                          cart={cart}
-                          changeAmounts={changeAmounts}
-                          onDelete={onDelete}
-                      />
-                    </Flex>
-                ))}
-          </div>
-          <Summary>
-            <div style={{ textAlign: "center", fontSize: "20px" }}>주문 내역</div>
-            <Flex justify="space-between">
-              <div>상품 금액</div>
-              <div>{totalPrice.toLocaleString("ko-KR")}원</div>
-            </Flex>
-            <Flex justify="space-between">
-              <div>배송료</div>
-              <div>{shipping.toLocaleString("ko-KR")}원</div>
-            </Flex>
-            <Flex justify="space-between">
-              <div>합계</div>
-              <div>{(totalPrice + shipping).toLocaleString("ko-KR")}원</div>
-            </Flex>
-            <PurchaseButton onClick={handlePurchase}>주문하기</PurchaseButton>
-          </Summary>
-        </Flex>
-      </div>
+    <div>
+      <Flex justify='space-around'>
+        <div>
+          {isLoading ||
+            carts?.map((cart) => (
+              <Flex style={{ marginBottom: '8px' }}>
+                <Checkbox
+                  id={cart.id}
+                  onChange={checkboxHandle}
+                  style={{ marginRight: '15px' }}
+                />
+                <CartItem
+                  cart={cart}
+                  changeAmounts={changeAmounts}
+                  onDelete={onDelete}
+                />
+              </Flex>
+            ))}
+        </div>
+        <Summary>
+          <div style={{ textAlign: 'center', fontSize: '20px' }}>주문 내역</div>
+          <Flex justify='space-between'>
+            <div>상품 금액</div>
+            <div>{totalPrice.toLocaleString('ko-KR')}원</div>
+          </Flex>
+          <Flex justify='space-between'>
+            <div>배송료</div>
+            <div>{shipping.toLocaleString('ko-KR')}원</div>
+          </Flex>
+          <Flex justify='space-between'>
+            <div>합계</div>
+            <div>{(totalPrice + shipping).toLocaleString('ko-KR')}원</div>
+          </Flex>
+          <PurchaseButton
+            disabled={carts.length === 0}
+            onClick={handlePurchase}
+          >
+            주문하기
+          </PurchaseButton>
+        </Summary>
+      </Flex>
+    </div>
   );
 };
 
