@@ -75,7 +75,7 @@ const PurchaseList = () => {
             />
             <Flex gap={32}>
               <div>수량: {item.amount}개</div>
-              <div>가격: {item.price.toLocaleString()}원</div>
+              {/* <div>가격: {item.price.toLocaleString()}원</div> */}
               <Title level={5}>
                 총 가격: {item.totalPrice.toLocaleString()}원
               </Title>

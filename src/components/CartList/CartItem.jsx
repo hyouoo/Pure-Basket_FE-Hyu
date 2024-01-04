@@ -12,12 +12,12 @@ const CartItem = ({ instance, cart, changeAmounts }) => {
         setAmount(newAmount);
         changeAmounts(cart, newAmount);
         setTimeout(() => {
-            instance.put(`/api/carts/${cart.id}`, { amount });
+            instance.put(`carts/${cart.id}`, { amount });
         }, 1500);
     };
 
     const handleDelete = async () => {
-        await instance.delete(`/api/carts/${cart.id}`);
+        await instance.delete(`carts/${cart.id}`);
         window.location.reload();
     };
 

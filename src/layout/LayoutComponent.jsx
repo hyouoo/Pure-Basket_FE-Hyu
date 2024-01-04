@@ -33,6 +33,7 @@ const LayoutComponent = () => {
       `/products/search?query=${inputValue}`
     );
     setInputValue('');
+    navigate(`/products/search?query=${inputValue}`)
   };
 
   const handleChange = (e) => {

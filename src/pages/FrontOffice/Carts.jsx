@@ -75,7 +75,7 @@ const Carts = () => {
   };
 
   const getCarts = async () => {
-    const { data } = await jwtInstance.get(`/api/carts`);
+    const { data } = await jwtInstance.get(`carts`);
     setCarts(data);
     setIsLoading(false);
   };
@@ -85,7 +85,7 @@ const Carts = () => {
       .map((cart) => ({ productId: cart.id, amount: cart.amount }));
 
   const handlePurchase = async () => {
-    await jwtInstance.post(`/api/purchases`, {purchaseList: purchaseList});
+    await jwtInstance.post(`purchases`, {purchaseList: purchaseList});
     navigate("/purchase_list");
   };
 

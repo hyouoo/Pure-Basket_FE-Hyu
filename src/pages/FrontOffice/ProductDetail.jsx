@@ -69,7 +69,7 @@ const ProductDetail = () => {
             </Title>
 
             <Title level={4}>
-              <span>남은 수량:</span> {product.stock.toLocaleString('ko-KR')}
+              {/* <span>남은 수량:</span> {product.stock.toLocaleString('ko-KR')} */}
               <span>개</span>
             </Title>
             <Paragraph>{product.info}</Paragraph>
