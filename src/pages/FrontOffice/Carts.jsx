@@ -91,7 +91,7 @@ const Carts = () => {
 
   const handlePurchase = async () => {
     await jwtInstance.post(`purchases`, { purchaseList: purchaseList });
-    navigate('/purchase_list');
+    navigate('/order-complete');
   };
 
   useEffect(() => {
@@ -118,27 +118,31 @@ const Carts = () => {
               </Flex>
             ))}
         </div>
-        <Summary>
-          <div style={{ textAlign: 'center', fontSize: '20px' }}>주문 내역</div>
-          <Flex justify='space-between'>
-            <div>상품 금액</div>
-            <div>{totalPrice.toLocaleString('ko-KR')}원</div>
-          </Flex>
-          <Flex justify='space-between'>
-            <div>배송료</div>
-            <div>{shipping.toLocaleString('ko-KR')}원</div>
-          </Flex>
-          <Flex justify='space-between'>
-            <div>합계</div>
-            <div>{(totalPrice + shipping).toLocaleString('ko-KR')}원</div>
-          </Flex>
-          <PurchaseButton
-            disabled={carts.length === 0}
-            onClick={handlePurchase}
-          >
-            주문하기
-          </PurchaseButton>
-        </Summary>
+        {isLoading || (
+          <Summary>
+            <div style={{ textAlign: 'center', fontSize: '20px' }}>
+              주문 내역
+            </div>
+            <Flex justify='space-between'>
+              <div>상품 금액</div>
+              <div>{totalPrice.toLocaleString('ko-KR')}원</div>
+            </Flex>
+            <Flex justify='space-between'>
+              <div>배송료</div>
+              <div>{shipping.toLocaleString('ko-KR')}원</div>
+            </Flex>
+            <Flex justify='space-between'>
+              <div>합계</div>
+              <div>{(totalPrice + shipping).toLocaleString('ko-KR')}원</div>
+            </Flex>
+            <PurchaseButton
+              disabled={carts.length === 0}
+              onClick={handlePurchase}
+            >
+              주문하기
+            </PurchaseButton>
+          </Summary>
+        )}
       </Flex>
     </div>
   );

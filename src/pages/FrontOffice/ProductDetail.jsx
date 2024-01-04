@@ -30,7 +30,7 @@ const ProductDetail = () => {
     await jwtInstance.post(`/purchases`, {
       purchaseList: [{ productId, amount }],
     });
-    navigate('/purchase_list');
+    navigate('/order-complete');
   };
 
   const handleAddToCart = async () => {
@@ -45,9 +45,9 @@ const ProductDetail = () => {
   return (
     isLoading || (
       <>
-        <Flex gap="middle">
+        <Flex gap='middle'>
           <section>
-            <Flex gap="middle" vertical>
+            <Flex gap='middle' vertical>
               {product.images.map((image, i) => {
                 return (
                   <Image
@@ -74,7 +74,7 @@ const ProductDetail = () => {
             </Title>
             <Paragraph>{product.info}</Paragraph>
 
-            <Flex justify="space-between">
+            <Flex justify='space-between'>
               <InputNumber
                 min={1}
                 max={product.stock}
@@ -88,11 +88,11 @@ const ProductDetail = () => {
                 <span>원</span>
               </Title>
             </Flex>
-            <Flex gap="middle" vertical>
-              <Button type="primary" onClick={handlePurchase}>
+            <Flex gap='middle' vertical>
+              <Button type='primary' onClick={handlePurchase}>
                 바로주문
               </Button>
-              <Button type="primary" onClick={handleAddToCart}>
+              <Button type='primary' onClick={handleAddToCart}>
                 장바구니 담기
               </Button>
             </Flex>

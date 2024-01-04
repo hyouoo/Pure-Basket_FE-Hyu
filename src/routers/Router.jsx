@@ -13,6 +13,7 @@ import RecipeDetail from '../pages/FrontOffice/RecipeDetail';
 import PurchaseList from '../pages/FrontOffice/PurchaseList';
 import AdminHome from '../pages/BackOffice/AdminHome';
 import AdminRecipe from '../pages/BackOffice/AdminRecipe';
+import OrderComplete from '../pages/FrontOffice/OrderComplete';
 
 const Router = () => {
   return (
@@ -20,22 +21,23 @@ const Router = () => {
       <Routes>
         <Route element={<LayoutComponent />}>
           <Route index element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:productId" element={<ProductDetail />} />
-          <Route path="/carts" element={<Carts />} />
-          <Route path="/recipes" element={<Recipes />} />
-          <Route path="/recipes/:recipeId" element={<RecipeDetail />} />
-          <Route path="/purchase_list" element={<PurchaseList />} />
-          <Route path="/search" element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/products' element={<Products />} />
+          <Route path='/products/:productId' element={<ProductDetail />} />
+          <Route path='/carts' element={<Carts />} />
+          <Route path='/recipes' element={<Recipes />} />
+          <Route path='/recipes/:recipeId' element={<RecipeDetail />} />
+          <Route path='/purchase_list' element={<PurchaseList />} />
+          <Route path='/search' element={<Home />} />
+          <Route path='/order-complete' element={<OrderComplete />} />
         </Route>
-        <Route path="/admin" element={<LayoutComponent />}>
+        <Route path='/admin' element={<LayoutComponent />}>
           <Route index element={<AdminHome />} />
-          <Route path="/admin/login" element={<Login />} />
-          <Route path="/admin/recipes" element={<AdminRecipe />} />
+          <Route path='/admin/login' element={<Login />} />
+          <Route path='/admin/recipes' element={<AdminRecipe />} />
         </Route>
-        <Route path="/*" element={<NotFound />} />
+        <Route path='/*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
