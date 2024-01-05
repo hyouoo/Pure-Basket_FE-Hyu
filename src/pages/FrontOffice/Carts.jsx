@@ -6,7 +6,9 @@ import { userState } from '../../recoil/atoms';
 import { createJwtInstance } from '../../network/axios';
 import CartItem from '../../components/CartList/CartItem';
 import styled from 'styled-components';
-import { List } from 'antd';
+import { Typography, Button, List, Divider } from 'antd';
+
+const { Title, Paragraph } = Typography;
 
 const Summary = styled.div`
   position: relative;
@@ -22,18 +24,6 @@ const Summary = styled.div`
   justify-content: space-around;
 `;
 
-const PurchaseButton = styled.button`
-  font-size: 20px;
-  width: 200px;
-  height: 50px;
-  border: 1px solid #77bb70;
-  border-radius: 10px;
-  background-color: #d4ffb3;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 const Carts = () => {
   const navigate = useNavigate();
   const [carts, setCarts] = useState([]);
@@ -45,7 +35,11 @@ const Carts = () => {
   const shipping = 100;
   let totalPrice = carts
     ?.filter((cart) => checkItems.includes(cart.id))
-    .reduce((sum, cart) => sum + cart.price * cart.amount, 0);
+    .reduce(
+      (sum, cart) =>
+        sum + (cart.price * (100 - cart.discountRate) * cart.amount) / 100,
+      0
+    );
 
   const checkboxHandle = (event) => {
     const item = event.target.id;
@@ -77,7 +71,7 @@ const Carts = () => {
   const getCarts = async () => {
     const { data } = await jwtInstance.get(`/carts`);
     setCarts(data);
-    setCheckItems(data);
+    console.log(data);
     setIsLoading(false);
   };
 
@@ -99,52 +93,72 @@ const Carts = () => {
   }, []);
 
   return (
-    <div>
-      <Flex justify='space-around'>
-        <div>
-          {isLoading ||
-            carts?.map((cart) => (
-              <Flex style={{ marginBottom: '8px' }}>
-                <Checkbox
-                  id={cart.id}
-                  onChange={checkboxHandle}
-                  style={{ marginRight: '15px' }}
-                />
-                <CartItem
-                  cart={cart}
-                  changeAmounts={changeAmounts}
-                  onDelete={onDelete}
-                />
+    <>
+      <Divider orientation='center'>
+        <Title level={3}>장바구니</Title>
+      </Divider>
+      <div>
+        <Flex justify='space-around'>
+          <div>
+            {isLoading ||
+              carts?.map((cart) => (
+                <Flex style={{ marginBottom: '8px' }}>
+                  <Checkbox
+                    id={cart.id}
+                    onChange={checkboxHandle}
+                    style={{ marginRight: '15px' }}
+                  />
+                  <CartItem
+                    cart={cart}
+                    changeAmounts={changeAmounts}
+                    onDelete={onDelete}
+                  />
+                </Flex>
+              ))}
+          </div>
+          {isLoading || carts.length <= 0 ? (
+            <List></List>
+          ) : (
+            <Summary>
+              <div style={{ textAlign: 'center', fontSize: '20px' }}>
+                <Title level={4}>최종 결제 금액</Title>
+              </div>
+              <Flex justify='space-between'>
+                <Title level={5}>상품 금액</Title>
+                <Paragraph>{totalPrice.toLocaleString('ko-KR')}원</Paragraph>
               </Flex>
-            ))}
-        </div>
-        {isLoading || (
-          <Summary>
-            <div style={{ textAlign: 'center', fontSize: '20px' }}>
-              주문 내역
-            </div>
-            <Flex justify='space-between'>
-              <div>상품 금액</div>
-              <div>{totalPrice.toLocaleString('ko-KR')}원</div>
-            </Flex>
-            <Flex justify='space-between'>
-              <div>배송료</div>
-              <div>{shipping.toLocaleString('ko-KR')}원</div>
-            </Flex>
-            <Flex justify='space-between'>
-              <div>합계</div>
-              <div>{(totalPrice + shipping).toLocaleString('ko-KR')}원</div>
-            </Flex>
-            <PurchaseButton
-              disabled={carts.length === 0}
-              onClick={handlePurchase}
-            >
-              주문하기
-            </PurchaseButton>
-          </Summary>
-        )}
-      </Flex>
-    </div>
+              <Flex justify='space-between'>
+                <Title level={5}>배송료</Title>
+                <Paragraph>{shipping.toLocaleString('ko-KR')}원</Paragraph>
+              </Flex>
+              <Flex justify='space-between'>
+                <Title level={5}>합계</Title>
+                <Paragraph>
+                  {(totalPrice + shipping).toLocaleString('ko-KR')}원
+                </Paragraph>
+              </Flex>
+              <Button
+                type='primary'
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '40px',
+                  paddingTop: '12px',
+                }}
+                disabled={checkItems.length === 0}
+                onClick={handlePurchase}
+              >
+                <Title level={5}>
+                  {checkItems.length > 0 && `${checkItems.length}개`} 상품
+                  주문하기
+                </Title>
+              </Button>
+            </Summary>
+          )}
+        </Flex>
+      </div>
+    </>
   );
 };
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Image, Typography, Flex, Divider } from 'antd';
+import { Image, Typography, Flex, theme } from 'antd';
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 const Wrapper = styled.div`
   margin: 8px 16px;
@@ -18,6 +18,10 @@ const Wrapper = styled.div`
 `;
 
 const Product = ({ product }) => {
+  const {
+    token: { colorAccent },
+  } = theme.useToken();
+
   return (
     <Wrapper>
       <Link to={`/products/${product.id}`}>
@@ -25,13 +29,13 @@ const Product = ({ product }) => {
           style={{
             border: '1px solid #00000033',
             borderRadius: '8px',
-            minHeight: '240px',
+            minHeight: '280px',
           }}
         >
           <Image
             preview={false}
             style={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
-            width={200}
+            width={280}
             src={`${product.images[0]}`}
           />
           <div>
@@ -47,7 +51,32 @@ const Product = ({ product }) => {
               {/* </Flex> */}
               {/* <Flex vertical align='end' style={{ width: '100%' }}> */}
 
-              <Title level={5}>{product.price.toLocaleString('ko-KR')}원</Title>
+              <Flex
+                style={{ width: '100%' }}
+                justify='center'
+                gap={40}
+                align='center'
+              >
+                <Title
+                  level={5}
+                  style={{
+                    textDecoration: `${
+                      product.event === 'DISCOUNT' ? 'line-through' : ''
+                    }`,
+                  }}
+                >
+                  {product.price.toLocaleString('ko-KR')}원
+                </Title>
+                {product.event === 'DISCOUNT' ? (
+                  <Title level={4} style={{ color: colorAccent }}>
+                    {(
+                      (product.price * (100 - product.discountRate)) /
+                      100
+                    ).toLocaleString('ko-KR')}
+                    원
+                  </Title>
+                ) : null}
+              </Flex>
             </Flex>
           </div>
         </div>

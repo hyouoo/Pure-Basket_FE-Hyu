@@ -30,9 +30,11 @@ const Home = () => {
   // } = theme.useToken();
 
   const query = searchParams.get('query');
-  
+
   const fetchData = async (page = 1) => {
-    const api = query ? `/products/search?query=${query}&page=${page}` : `/products?page=${page}`;
+    const api = query
+      ? `/products/search?query=${query}&page=${page}`
+      : `/products?page=${page}`;
 
     const {
       data: { eventProducts, products },
@@ -49,12 +51,11 @@ const Home = () => {
   return (
     <>
       {query ? (
-        <div style={{width: "100%"}}>
+        <div style={{ width: '100%' }}>
           <Title level={2}> 검색어: {query}</Title>
         </div>
-     ) : null
-      }
-      <Divider orientation="center">
+      ) : null}
+      <Divider orientation='center'>
         <Title level={3}> 할인 중인 상품</Title>
       </Divider>
 
@@ -65,7 +66,7 @@ const Home = () => {
           ? null
           : eventProducts.content.slice(0, 8).map((p) => {
               return (
-                <Col key={p.category + p.name} className="gutter-row" span={6}>
+                <Col key={p.category + p.name} className='gutter-row' span={60}>
                   <Product product={p}></Product>
                 </Col>
               );
@@ -74,7 +75,7 @@ const Home = () => {
       </Row>
       {/* </Carousel> */}
 
-      <Divider orientation="center">
+      <Divider orientation='center'>
         <Title level={3}>일반 상품</Title>
       </Divider>
 
@@ -83,7 +84,7 @@ const Home = () => {
           ? null
           : products.content.map((p) => {
               return (
-                <Col key={p.category + p.name} className="gutter-row" span={6}>
+                <Col key={p.category + p.name} className='gutter-row' span={6}>
                   <Product product={p}></Product>
                 </Col>
               );
