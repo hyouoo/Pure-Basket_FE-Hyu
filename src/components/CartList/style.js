@@ -42,7 +42,7 @@ export const ProductName = styled.div`
 `;
 
 export const Price = styled.div`
-  flex-basis: 40px;
+  flex-basis: 100px;
   font-size: 15px;
 `;
 

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createJwtInstance } from '../../network/axios';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../../recoil/atoms';
-import { Button, Flex, List, Skeleton, Typography } from 'antd';
-import { Link } from 'react-router-dom';
+import { Button, Flex, List, Skeleton, Typography, Divider } from 'antd';
 
 const { Title } = Typography;
 
@@ -51,46 +50,51 @@ const PurchaseList = () => {
       </div>
     ) : null;
   return (
-    <List
-      style={{ width: '80%' }}
-      className='demo-loadmore-list'
-      loading={initLoading}
-      itemLayout='horizontal'
-      loadMore={loadMore}
-      dataSource={data}
-      renderItem={(item) => (
-        <List.Item
-        // actions={[
-        //   <a key="list-loadmore-edit">edit</a>,
-        //   <a key="list-loadmore-more">more</a>,
-        // ]}
-        >
-          {/* <Link to={`/products/${item.productId}`}> */}
-          <Skeleton title={false} loading={item.loading} active>
-            <List.Item.Meta
-              style={{ color: 'black' }}
-              title={
-                <a href={`/purchase/${item.id}`}>
-                  {/* <Title level={5}>{item.name}</Title> */}
-                  <Title level={5}>{`주문일자: ${new Date(
-                    item.purchasedAt
-                  ).toLocaleString()}`}</Title>
-                </a>
-              }
-              // description={`주문일자: ${new Date(item.purchasedAt).toLocaleString()}`}
-            />
-            <Flex gap={32}>
-              {/* <div>수량: {item.amount}개</div> */}
-              {/* <div>가격: {item.price.toLocaleString()}원</div> */}
-              <Title level={5}>
-                총 가격: {item.totalPrice.toLocaleString()}원
-              </Title>
-            </Flex>
-          </Skeleton>
-          {/* </Link> */}
-        </List.Item>
-      )}
-    />
+    <>
+      <Divider orientation='center'>
+        <Title level={3}>주문 내역</Title>
+      </Divider>
+      <List
+        style={{ width: '80%' }}
+        className='demo-loadmore-list'
+        loading={initLoading}
+        itemLayout='horizontal'
+        loadMore={loadMore}
+        dataSource={data}
+        renderItem={(item) => (
+          <List.Item
+          // actions={[
+          //   <a key="list-loadmore-edit">edit</a>,
+          //   <a key="list-loadmore-more">more</a>,
+          // ]}
+          >
+            {/* <Link to={`/products/${item.productId}`}> */}
+            <Skeleton title={false} loading={item.loading} active>
+              <List.Item.Meta
+                style={{ color: 'black' }}
+                title={
+                  <a href={`/purchase/${item.id}`}>
+                    {/* <Title level={5}>{item.name}</Title> */}
+                    <Title level={5}>{`주문일자: ${new Date(
+                      item.purchasedAt
+                    ).toLocaleString()}`}</Title>
+                  </a>
+                }
+                // description={`주문일자: ${new Date(item.purchasedAt).toLocaleString()}`}
+              />
+              <Flex gap={32}>
+                {/* <div>수량: {item.amount}개</div> */}
+                {/* <div>가격: {item.price.toLocaleString()}원</div> */}
+                <Title level={5}>
+                  총 가격: {item.totalPrice.toLocaleString()}원
+                </Title>
+              </Flex>
+            </Skeleton>
+            {/* </Link> */}
+          </List.Item>
+        )}
+      />
+    </>
   );
 };
 

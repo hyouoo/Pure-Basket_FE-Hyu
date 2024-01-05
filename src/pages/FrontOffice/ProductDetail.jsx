@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { createJwtInstance, defaultInstance } from '../../network/axios';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../../recoil/atoms';
-import { Typography, Flex, Image, Divider, Button, InputNumber } from 'antd';
+import {
+  Typography,
+  Flex,
+  Image,
+  Divider,
+  Button,
+  InputNumber,
+  theme,
+} from 'antd';
 
 const { Title, Paragraph } = Typography;
 
@@ -21,6 +29,10 @@ const ProductDetail = () => {
     setProduct(data);
     setIsLoading(false);
   };
+
+  const {
+    token: { colorAccent },
+  } = theme.useToken();
 
   const onChange = (value) => {
     setAmount(value);
@@ -45,7 +57,7 @@ const ProductDetail = () => {
   return (
     isLoading || (
       <>
-        <Flex gap='middle'>
+        <Flex gap={80}>
           <section>
             <Flex gap='middle' vertical>
               {product.images.map((image, i) => {
@@ -53,7 +65,7 @@ const ProductDetail = () => {
                   <Image
                     key={image + i}
                     preview={false}
-                    width={300}
+                    width={500}
                     src={`${image}`}
                     style={{ borderRadius: '8px' }}
                   />
@@ -65,17 +77,30 @@ const ProductDetail = () => {
             <Title level={3}>{product.name}</Title>
             <Divider />
 
-            <Title level={3}>
+            <Title
+              level={4}
+              style={{
+                textDecoration: `${
+                  product.event === 'DISCOUNT' ? 'line-through' : ''
+                }`,
+              }}
+            >
               {product.price.toLocaleString('ko-KR')} <span>원</span>
             </Title>
+            {product.event === 'DISCOUNT' ? (
+              <Title level={3} style={{ color: colorAccent }}>
+                {(
+                  (product.price * (100 - product.discountRate)) /
+                  100
+                ).toLocaleString('ko-KR')}
+                원
+              </Title>
+            ) : null}
 
-            <Title level={4}>
-              {/* <span>남은 수량:</span> {product.stock.toLocaleString('ko-KR')} */}
-              <span>개</span>
-            </Title>
+            <Title level={4}></Title>
             <Paragraph>{product.info}</Paragraph>
 
-            <Flex justify='space-between'>
+            <Flex justify='space-between' gap={16}>
               <InputNumber
                 min={1}
                 max={product.stock}
@@ -85,17 +110,38 @@ const ProductDetail = () => {
 
               <Title level={4}>
                 <span>총액: </span>
-                {(product.price * amount).toLocaleString('ko-KR')}
+                {(
+                  ((product.price * (100 - product.discountRate)) / 100) *
+                  amount
+                ).toLocaleString('ko-KR')}
                 <span>원</span>
               </Title>
             </Flex>
-            <Flex gap='middle' vertical>
-              <Button type='primary' onClick={handlePurchase}>
-                바로주문
-              </Button>
-              <Button type='primary' onClick={handleAddToCart}>
-                장바구니 담기
-              </Button>
+            <Flex gap='middle' vertical style={{ marginTop: '16px' }}>
+              {token ? (
+                <>
+                  <Button
+                    disabled={!token}
+                    type='primary'
+                    onClick={handlePurchase}
+                  >
+                    바로주문
+                  </Button>
+                  <Button
+                    disabled={!token}
+                    type='primary'
+                    onClick={handleAddToCart}
+                  >
+                    장바구니 담기
+                  </Button>
+                </>
+              ) : (
+                <Link style={{ width: '100%' }} to='/login'>
+                  <Button level={4} type='primary'>
+                    <span>로그인 후 주문</span>
+                  </Button>
+                </Link>
+              )}
             </Flex>
           </section>
         </Flex>
