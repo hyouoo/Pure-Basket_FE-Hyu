@@ -57,13 +57,21 @@ const RecipeDetail = () => {
         <Divider></Divider>
         <Title level={4}>관련 상품</Title>
         <List
-          style={{ width: '90%' }}
+          style={{
+            width: '80%',
+            borderRadius: '8px',
+          }}
           itemLayout='vertical'
           size='large'
           dataSource={recipe.products}
           renderItem={(item) => (
             <Link to={`/products/${item.id}`}>
               <List.Item
+                style={{
+                  border: '1px solid #00000033',
+                  borderRadius: '8px',
+                  margin: '8px',
+                }}
                 key={item.name}
                 extra={
                   <img
