@@ -25,8 +25,8 @@ const Recipes = () => {
       {isLoading || (
         <List
           style={{ width: '90%' }}
-          itemLayout="vertical"
-          size="large"
+          itemLayout='vertical'
+          size='large'
           pagination={{
             onChange: (page) => {},
             pageSize: 5,

@@ -3,6 +3,7 @@ import { createJwtInstance } from '../../network/axios';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../../recoil/atoms';
 import { Button, Flex, List, Skeleton, Typography } from 'antd';
+import { Link } from 'react-router-dom';
 
 const { Title } = Typography;
 
@@ -64,11 +65,12 @@ const PurchaseList = () => {
         //   <a key="list-loadmore-more">more</a>,
         // ]}
         >
+          {/* <Link to={`/products/${item.productId}`}> */}
           <Skeleton title={false} loading={item.loading} active>
             <List.Item.Meta
               style={{ color: 'black' }}
               title={
-                <a href={`/products/${item.productId}`}>
+                <a href={`/purchase/${item.id}`}>
                   {/* <Title level={5}>{item.name}</Title> */}
                   <Title level={5}>{`주문일자: ${new Date(
                     item.purchasedAt
@@ -85,6 +87,7 @@ const PurchaseList = () => {
               </Title>
             </Flex>
           </Skeleton>
+          {/* </Link> */}
         </List.Item>
       )}
     />

@@ -36,7 +36,12 @@ const RecipeDetail = () => {
         <Flex gap='middle'>
           <section>
             <Flex gap='middle' vertical>
-              <Image preview={false} width={200} src={`${recipe.imgUrl}`} />
+              <Image
+                preview={false}
+                width={200}
+                src={`${recipe.imgUrl}`}
+                style={{ borderRadius: '8px' }}
+              />
               <Button onClick={handleClick} type='primary'>
                 관련 상품 장바구니 담기
               </Button>
@@ -60,7 +65,14 @@ const RecipeDetail = () => {
             <Link to={`/products/${item.id}`}>
               <List.Item
                 key={item.name}
-                extra={<img width={160} alt={item.name} src={item.imgUrl} />}
+                extra={
+                  <img
+                    width={160}
+                    alt={item.name}
+                    src={item.imgUrl}
+                    style={{ borderRadius: '8px' }}
+                  />
+                }
               >
                 <List.Item.Meta title={item.name} />
                 {item.info}

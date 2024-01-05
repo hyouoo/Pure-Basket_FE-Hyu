@@ -55,6 +55,7 @@ const ProductDetail = () => {
                     preview={false}
                     width={300}
                     src={`${image}`}
+                    style={{ borderRadius: '8px' }}
                   />
                 );
               })}
