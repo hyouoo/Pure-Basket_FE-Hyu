@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LayoutComponent from '../layout/LayoutComponent';
 import Home from '../pages/FrontOffice/Home';
 import Login from '../pages/Login';
-import Signup from '../pages/FrontOffice/Signup';
+import Signup from '../pages/Signup';
 import Products from '../pages/FrontOffice/Products';
 import Carts from '../pages/FrontOffice/Carts';
 import NotFound from '../pages/NotFound';
