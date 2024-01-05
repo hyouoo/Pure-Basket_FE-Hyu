@@ -1,6 +1,7 @@
-import React from 'react';
-import { Form, Input, Button } from 'antd';
-
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { defaultInstance } from '../../network/axios';
+import { Form, Input, Button, Alert } from 'antd';
 
 const MyFormItemContext = React.createContext([]);
 function toArr(str) {
@@ -14,11 +15,31 @@ const MyFormItem = ({ name, ...props }) => {
 };
 
 const Signup = () => {
-  const onFinish = (e) => {
-    console.log(e);
+  const navigate = useNavigate();
+  const [isAlert, setIsAlert] = useState(false);
+  const [text, setText] = useState('');
+
+  const handleSubmit = async (data) => {
+    defaultInstance
+      .post(`/auth/signup`, { ...data })
+      .then(() => navigate('/login'))
+      .catch((error) => {
+        setText(error.toString());
+        setIsAlert(true);
+      });
   };
+
   return (
-    <Form name="form_item_path" layout="vertical" onFinish={onFinish}>
+    <Form
+      style={{ width: '50%' }}
+      name="form_item_path"
+      layout="vertical"
+      align="end"
+      onFinish={handleSubmit}
+    >
+      <MyFormItem name="name" label="이름">
+        <Input type="text" />
+      </MyFormItem>
       <MyFormItem name="email" label="Email">
         <Input type="email" />
       </MyFormItem>
@@ -32,6 +53,10 @@ const Signup = () => {
       <MyFormItem name="phone" label="전화번호">
         <Input />
       </MyFormItem>
+
+      {isAlert && (
+        <Alert message="Error" description={text} type="error" showIcon />
+      )}
 
       <Button type="primary" htmlType="submit">
         회원가입
