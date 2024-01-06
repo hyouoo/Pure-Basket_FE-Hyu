@@ -45,8 +45,8 @@ const Login = () => {
           role: decoded.auth,
         };
         setUserState(() => ({ ...state }));
-        navigate(-1);
-        // navigate(`${isBackOffice.current ? '/admin' : '/'}`);
+        // navigate(-1);
+        navigate(`${isBackOffice.current ? '/admin' : '/'}`);
       })
       .catch((error) => {
         // setText(error.toString());
