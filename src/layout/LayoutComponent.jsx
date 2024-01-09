@@ -24,15 +24,19 @@ const LayoutComponent = () => {
       email: '',
       role: '',
     }));
-    navigate('/');
+
+    // navigate(0);
+    // navigate('/');
   };
 
   // ToDo: 검색 결과 페이지 만들기
   const onSearch = async () => {
-    const data = await defaultInstance.get(
-      `/products/search?query=${inputValue}`
-    );
+    // const data = await defaultInstance.get(
+    //   `/products/search?query=${inputValue}`
+    // );
+
     setInputValue('');
+    navigate(`/search?query=${inputValue}`);
   };
 
   const handleChange = (e) => {
@@ -50,16 +54,16 @@ const LayoutComponent = () => {
           borderBottom: `1px solid ${colorPrimary}`,
         }}
       >
-        <Link to="/">
-          <Flex justify="center" align="start">
-            <img src="pure-basket-logo.png" alt="" width={64} height={48} />
+        <Link to='/'>
+          <Flex justify='center' align='start'>
+            <img src='pure-basket-logo.png' alt='' width={64} height={48} />
             <Title style={{ color: colorPrimary }} level={2}>
               Pure Basket
             </Title>
           </Flex>
         </Link>
         <Search
-          placeholder="input search text"
+          placeholder='input search text'
           onChange={handleChange}
           onSearch={onSearch}
           enterButton
@@ -68,7 +72,7 @@ const LayoutComponent = () => {
           }}
           value={inputValue}
         />
-        <Flex gap="small" wrap="wrap">
+        <Flex gap='small' wrap='wrap'>
           {user.email ? (
             <>
               <Title level={4}>{user.email}</Title>
@@ -77,10 +81,10 @@ const LayoutComponent = () => {
           ) : (
             location.pathname.includes('admin') || (
               <>
-                <Link to="login">
-                  <Button type="primary">로그인</Button>
+                <Link to='login'>
+                  <Button type='primary'>로그인</Button>
                 </Link>
-                <Link to="signup">
+                <Link to='signup'>
                   <Button>회원가입</Button>
                 </Link>
               </>
@@ -95,8 +99,8 @@ const LayoutComponent = () => {
             backgroundColor: colorTertiary,
             borderRight: '1px solid rgba(0, 0, 0, 0.08)',
           }}
-          breakpoint="lg"
-          collapsedWidth="0"
+          breakpoint='lg'
+          collapsedWidth='0'
           onBreakpoint={(broken) => {
             // console.log(broken);
           }}
@@ -178,8 +182,8 @@ const LayoutComponent = () => {
           >
             <Flex
               vertical
-              justify="start"
-              align="center"
+              justify='start'
+              align='center'
               style={{
                 padding: 24,
                 width: '100%',

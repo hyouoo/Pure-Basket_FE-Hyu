@@ -45,7 +45,8 @@ const Login = () => {
           role: decoded.auth,
         };
         setUserState(() => ({ ...state }));
-        navigate(`${isBackOffice.current ? '/admin' : '/'}`);
+        navigate(-1);
+        // navigate(`${isBackOffice.current ? '/admin' : '/'}`);
       })
       .catch((error) => {
         // setText(error.toString());
@@ -56,25 +57,25 @@ const Login = () => {
 
   return (
     <Flex style={{ width: '50%' }} gap={36} vertical>
-      <Title level={2}>{isBackOffice.current ? 'Admin' : 'User'} login</Title>
+      <Title level={2}>{isBackOffice.current ? '관리자' : '유저'} 로그인</Title>
 
       <Form
-        name="form_item_path"
-        layout="vertical"
-        align="end"
+        name='form_item_path'
+        layout='vertical'
+        align='end'
         onFinish={handleSubmit}
       >
-        <MyFormItem name="email" label="Email">
-          <Input type="email" />
+        <MyFormItem name='email' label='Email'>
+          <Input type='email' />
         </MyFormItem>
-        <MyFormItem name="password" label="Password">
-          <Input type="password" />
+        <MyFormItem name='password' label='Password'>
+          <Input type='password' />
         </MyFormItem>
 
         {isAlert ? (
-          <Alert message="Error" description={text} type="error" showIcon />
+          <Alert message='Error' description={text} type='error' showIcon />
         ) : null}
-        <Button type="primary" htmlType="submit">
+        <Button type='primary' htmlType='submit'>
           로그인
         </Button>
       </Form>

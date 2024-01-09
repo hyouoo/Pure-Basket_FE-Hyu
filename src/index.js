@@ -20,6 +20,7 @@ root.render(
             colorTertiary: '#e5f0dd22',
             colorInfo: '#77bb70',
             colorSuccess: '#f0b13b',
+            colorAccent: '#f0473b',
             borderRadius: 8,
             colorSplit: 'rgba(0, 0, 0, 0.38)',
           },
